@@ -1,30 +1,41 @@
-using System;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
     private Rigidbody2D _rb;
     private Animator _anim;
 
-    [Header("Movement")] [SerializeField] private float moveSpeed;
+    [Header("Movement")]
+    [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpForce;
+    [SerializeField] private float doubleJumpForce;
 
-    public bool canDoubleJump;
-
-    [Header("Collision info")] [SerializeField]
-    private float groundCheckDistance;
-
+    [Header("Wall interactions")]
+    [SerializeField] private float wallJumpDuration = .6f;
+    [SerializeField] private Vector2 wallJumpForce;
+    
+    [Header("Collision")]
+    [SerializeField] private float groundCheckDistance;
+    [SerializeField] private float wallCheckDistance;
     [SerializeField] private LayerMask whatIsGround;
+
+    private bool _isFacingRight = true;
     private bool _isGrounded;
+    private bool _isAirborne;
+    private bool _isWallDetected;
+    private bool _canDoubleJump;
+    private bool _isWallJumping;
 
     private float _xInput;
-    private bool _facingRight = true;
+    private float _yInput;
+
     private int _facingDirection = 1;
 
     private static readonly int XVelocity = Animator.StringToHash("xVelocity");
     private static readonly int YVelocity = Animator.StringToHash("yVelocity");
     private static readonly int IsGrounded = Animator.StringToHash("isGrounded");
+    private static readonly int IsWallDetected = Animator.StringToHash("isWallDetected");
 
     private void Awake()
     {
@@ -34,25 +45,92 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        HandleCollision();
+        UpdateAirborneStatus();
+        HandleWallSlide();
         HandleInput();
         HandleMovement();
         HandleFlip();
+        HandleCollision();
         HandleAnimation();
+    }
+
+    private void HandleWallSlide()
+    {
+        bool canWallSlide = _isWallDetected && _rb.linearVelocityY < 0;
+        if (!canWallSlide) return;
+        
+        float yModifier = _yInput < 0 ? 1 : .05f;
+        _rb.linearVelocityY *= yModifier;
+    }
+
+    private void UpdateAirborneStatus()
+    {
+        if (_isGrounded && _isAirborne)
+        {
+            HandleLanding();
+        }
+
+        if (!_isGrounded && !_isAirborne)
+        {
+            BecomeAirborne();
+        }
+    }
+
+    private void BecomeAirborne()
+    {
+        _isAirborne = true;
+    }
+
+    private void HandleLanding()
+    {
+        _canDoubleJump = true;
+        _isAirborne = false;
+    }
+    
+    private void HandleInput()
+    {
+        _xInput = Input.GetAxisRaw("Horizontal");
+        _yInput = Input.GetAxisRaw("Vertical");
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            JumpButton();
+        }
     }
 
     private void HandleCollision()
     {
         _isGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, whatIsGround);
+        _isWallDetected = Physics2D.Raycast(transform.position, Vector2.right * _facingDirection, wallCheckDistance,
+            whatIsGround);
+    }
+    
+    private void HandleMovement()
+    {
+        if (_isWallDetected)
+            return;
+        
+        if(_isWallJumping)
+            return;
+
+        _rb.linearVelocityX = _xInput * moveSpeed;
     }
 
-    private void HandleInput()
-    {
-        _xInput = Input.GetAxisRaw("Horizontal");
+    #region Jump
 
-        if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
+    private void JumpButton()
+    {
+        if (_isGrounded)
         {
             Jump();
+        }
+        else if (_isWallDetected && !_isGrounded)
+        {
+            WallJump();
+        }
+        else if (_canDoubleJump)
+        {
+            DoubleJump();
         }
     }
 
@@ -61,34 +139,63 @@ public class Player : MonoBehaviour
         _rb.linearVelocityY = jumpForce;
     }
 
-    private void HandleAnimation()
+    private void DoubleJump()
     {
-        _anim.SetFloat(XVelocity, _rb.linearVelocityX);
-        _anim.SetFloat(YVelocity, _rb.linearVelocityY);
-        _anim.SetBool(IsGrounded, _isGrounded);
+        _isWallJumping = false;
+        _canDoubleJump = false;
+        _rb.linearVelocityY = doubleJumpForce;
+    }
+    
+    private void WallJump()
+    {
+        _canDoubleJump = true;
+        _rb.linearVelocity = new Vector2(wallJumpForce.x * -_facingDirection, wallJumpForce.y);
+        
+        FLip();
+        
+        StopAllCoroutines();
+        StartCoroutine(WallJumpRoutine());
     }
 
-    private void HandleMovement()
+    private IEnumerator WallJumpRoutine()
     {
-        _rb.linearVelocityX = _xInput * moveSpeed;
+        _isWallJumping = true;
+        yield return new WaitForSeconds(wallJumpDuration);
+        _isWallJumping = false;
     }
+
+    #endregion
+
+    #region Flip
 
     private void HandleFlip()
     {
-        if (_rb.linearVelocityX < 0 && _facingRight || _rb.linearVelocityX > 0 && !_facingRight)
+        if (_xInput < 0 && _isFacingRight || _xInput > 0 && !_isFacingRight)
             FLip();
     }
 
     private void FLip()
     {
         transform.Rotate(0, 180, 0);
-        _facingRight = !_facingRight;
+        _isFacingRight = !_isFacingRight;
         _facingDirection *= -1;
+    }
+
+    #endregion
+    
+    private void HandleAnimation()
+    {
+        _anim.SetFloat(XVelocity, _rb.linearVelocityX);
+        _anim.SetFloat(YVelocity, _rb.linearVelocityY);
+        _anim.SetBool(IsGrounded, _isGrounded);
+        _anim.SetBool(IsWallDetected, _isWallDetected);
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawLine(transform.position,
             new Vector2(transform.position.x, transform.position.y - groundCheckDistance));
+        Gizmos.DrawLine(transform.position,
+            new Vector2(transform.position.x + (wallCheckDistance * _facingDirection), transform.position.y));
     }
 }
