@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
@@ -11,9 +12,17 @@ public class Player : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private float doubleJumpForce;
 
+    [Header("Buffer & CoyJump")]
+    [SerializeField] private float bufferJumpWindow = .25f;
+    private float _bufferJumpActivated = -1;
+    
     [Header("Wall interactions")]
     [SerializeField] private float wallJumpDuration = .6f;
     [SerializeField] private Vector2 wallJumpForce;
+    
+    [Header("Knockback")]
+    [SerializeField] private float knockbackDuration;
+    [SerializeField] private Vector2 knockbackPower;
     
     [Header("Collision")]
     [SerializeField] private float groundCheckDistance;
@@ -26,6 +35,7 @@ public class Player : MonoBehaviour
     private bool _isWallDetected;
     private bool _canDoubleJump;
     private bool _isWallJumping;
+    private bool _isKnocked;
 
     private float _xInput;
     private float _yInput;
@@ -36,6 +46,7 @@ public class Player : MonoBehaviour
     private static readonly int YVelocity = Animator.StringToHash("yVelocity");
     private static readonly int IsGrounded = Animator.StringToHash("isGrounded");
     private static readonly int IsWallDetected = Animator.StringToHash("isWallDetected");
+    private static readonly int Knockback1 = Animator.StringToHash("knockback");
 
     private void Awake()
     {
@@ -46,12 +57,41 @@ public class Player : MonoBehaviour
     private void Update()
     {
         UpdateAirborneStatus();
+        
+        if (_isKnocked) return;
+        
         HandleWallSlide();
         HandleInput();
         HandleMovement();
         HandleFlip();
         HandleCollision();
         HandleAnimation();
+    }
+
+    private void RequestBufferJump()
+    {
+        if (_isAirborne)
+        {
+            _bufferJumpActivated = Time.time;
+        }
+    }
+    
+    public void Knockback()
+    {
+        if (_isKnocked) return;
+        
+        StartCoroutine(KnockbackRoutine());
+        _anim.SetTrigger(Knockback1);
+        _rb.linearVelocity = new Vector2(knockbackPower.x * -_facingDirection, knockbackPower.y);
+    }
+
+    private IEnumerator KnockbackRoutine()
+    {
+        _isKnocked = true;
+
+        yield return new WaitForSeconds(knockbackDuration);
+
+        _isKnocked = false;
     }
 
     private void HandleWallSlide()
@@ -85,6 +125,8 @@ public class Player : MonoBehaviour
     {
         _canDoubleJump = true;
         _isAirborne = false;
+        
+        AttemptBufferJump();
     }
     
     private void HandleInput()
@@ -95,6 +137,16 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             JumpButton();
+            RequestBufferJump();
+        }
+    }
+
+    private void AttemptBufferJump()
+    {
+        if (Time.time < _bufferJumpActivated + bufferJumpWindow)
+        {
+            _bufferJumpActivated = 0;
+            Jump();
         }
     }
 
