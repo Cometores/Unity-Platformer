@@ -253,7 +253,7 @@ public class Player : MonoBehaviour
     }
 
     #endregion
-    
+
     private void HandleAnimation()
     {
         _anim.SetFloat(XVelocity, _rb.linearVelocityX);

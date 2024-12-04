@@ -5,7 +5,10 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     [SerializeField] private Player player;
-    
+
+    [Header("Fruits Management")]
+    public int fruitsCollected;
+    public bool fruitsHaveRandomLook;
 
     private void Awake()
     {
@@ -18,4 +21,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public void AddFruit() => fruitsCollected++;
+    public bool FruitsHaveRandomLook() => fruitsHaveRandomLook;
 }
