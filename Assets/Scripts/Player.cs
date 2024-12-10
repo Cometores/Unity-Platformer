@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -6,6 +7,7 @@ public class Player : MonoBehaviour
 {
     private Rigidbody2D _rb;
     private Animator _anim;
+    private CapsuleCollider2D _cd;
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed;
@@ -17,7 +19,6 @@ public class Player : MonoBehaviour
     private float _bufferJumpActivated = -1;
     [SerializeField] private float coyouteJumpWindow;
     private float coyoteJumpActivated = -1;
-    
     
     [Header("Wall interactions")]
     [SerializeField] private float wallJumpDuration = .6f;
@@ -32,6 +33,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float wallCheckDistance;
     [SerializeField] private LayerMask whatIsGround;
 
+    [Header("VFX")]
+    [SerializeField] private GameObject deathVfx;
+
     private bool _isFacingRight = true;
     private bool _isGrounded;
     private bool _isAirborne;
@@ -39,9 +43,12 @@ public class Player : MonoBehaviour
     private bool _canDoubleJump;
     private bool _isWallJumping;
     private bool _isKnocked;
+    private bool _canBeControlled = false;
 
     private float _xInput;
     private float _yInput;
+
+    private float _defaultGravityScale;
 
     private int _facingDirection = 1;
 
@@ -54,13 +61,21 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _cd = GetComponent<CapsuleCollider2D>();
         _anim = GetComponentInChildren<Animator>();
+    }
+
+    private void Start()
+    {
+        _defaultGravityScale = _rb.gravityScale;
+        RespawnFinished(false);
     }
 
     private void Update()
     {
         UpdateAirborneStatus();
         
+        if (!_canBeControlled) return;
         if (_isKnocked) return;
         
         HandleWallSlide();
@@ -69,6 +84,22 @@ public class Player : MonoBehaviour
         HandleFlip();
         HandleCollision();
         HandleAnimation();
+    }
+
+    public void RespawnFinished(bool finished)
+    {
+        if (finished)
+        {
+            _rb.gravityScale = _defaultGravityScale;
+            _canBeControlled = true;
+            _cd.enabled = true;
+        }
+        else
+        {
+            _rb.gravityScale = 0;
+            _canBeControlled = false;
+            _cd.enabled = false;
+        }
     }
     
     public void Knockback()
@@ -80,7 +111,11 @@ public class Player : MonoBehaviour
         _rb.linearVelocity = new Vector2(knockbackPower.x * -_facingDirection, knockbackPower.y);
     }
 
-    
+    public void Die()
+    {
+        Instantiate(deathVfx, transform.position, Quaternion.identity);
+        Destroy(gameObject);
+    }
 
     private IEnumerator KnockbackRoutine()
     {
@@ -140,8 +175,6 @@ public class Player : MonoBehaviour
             RequestBufferJump();
         }
     }
-
-    
 
     private void HandleCollision()
     {
