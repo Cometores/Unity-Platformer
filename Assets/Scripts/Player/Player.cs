@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
@@ -18,7 +16,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float bufferJumpWindow = .25f;
     private float _bufferJumpActivated = -1;
     [SerializeField] private float coyouteJumpWindow;
-    private float coyoteJumpActivated = -1;
+    private float _coyoteJumpActivated = -1;
 
     [Header("Wall interactions")]
     [SerializeField] private float wallJumpDuration = .6f;
@@ -75,7 +73,12 @@ public class Player : MonoBehaviour
     {
         UpdateAirborneStatus();
 
-        if (!_canBeControlled) return;
+        if (!_canBeControlled)
+        {
+            HandleCollision();
+            HandleAnimation();
+            return;
+        }
         if (_isKnocked) return;
 
         HandleWallSlide();
@@ -114,6 +117,23 @@ public class Player : MonoBehaviour
     {
         Instantiate(deathVfx, transform.position, Quaternion.identity);
         Destroy(gameObject);
+    }
+
+    public void Push(Vector2 direction, float duration = 0)
+    {
+        StartCoroutine(PushCoroutine(direction, duration));
+    }
+
+    private IEnumerator PushCoroutine(Vector2 direction, float duration)
+    {
+        _canBeControlled = false;
+
+        _rb.linearVelocity = Vector2.zero;
+        _rb.AddForce(direction, ForceMode2D.Impulse);
+        
+        yield return new WaitForSeconds(duration);
+
+        _canBeControlled = true;
     }
 
     private IEnumerator KnockbackRoutine()
@@ -199,7 +219,7 @@ public class Player : MonoBehaviour
 
     private void JumpButton()
     {
-        bool coyoteJumpAvalible = Time.time < coyoteJumpActivated + coyouteJumpWindow;
+        bool coyoteJumpAvalible = Time.time < _coyoteJumpActivated + coyouteJumpWindow;
 
         if (_isGrounded || coyoteJumpAvalible)
         {
@@ -248,9 +268,9 @@ public class Player : MonoBehaviour
 
     #region Buffer & Coyoute Jump
 
-    private void ActivateCoyoteJump() => coyoteJumpActivated = Time.time;
+    private void ActivateCoyoteJump() => _coyoteJumpActivated = Time.time;
 
-    private void CancelCoyouteJump() => coyoteJumpActivated = 0;
+    private void CancelCoyouteJump() => _coyoteJumpActivated = 0;
 
     private void RequestBufferJump()
     {

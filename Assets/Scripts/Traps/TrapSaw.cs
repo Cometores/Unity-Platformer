@@ -1,9 +1,7 @@
-using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-public class Trap_Saw : MonoBehaviour
+public class TrapSaw : MonoBehaviour
 {
     private Animator _anim;
     private SpriteRenderer _sr;
