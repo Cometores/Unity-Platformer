@@ -193,6 +193,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 885348658223220106}
+  - component: {fileID: 4123696109812147793}
   m_Layer: 0
   m_Name: WayPoint (1)
   m_TagString: Untagged
@@ -215,6 +216,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2059165188595680008}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4123696109812147793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887540210559652338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f77bb7cf8b5af2459d451d112fa375e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7384152224002992495
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,6 +237,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6956531239369750016}
+  - component: {fileID: 1649183500578606534}
   m_Layer: 0
   m_Name: WayPoint (2)
   m_TagString: Untagged
@@ -246,6 +260,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2059165188595680008}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1649183500578606534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7384152224002992495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f77bb7cf8b5af2459d451d112fa375e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8385835060741241781
 GameObject:
   m_ObjectHideFlags: 0
@@ -255,6 +281,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5304143136180814568}
+  - component: {fileID: 9147514398100188185}
   m_Layer: 0
   m_Name: WayPoint
   m_TagString: Untagged
@@ -277,3 +304,15 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2059165188595680008}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9147514398100188185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8385835060741241781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f77bb7cf8b5af2459d451d112fa375e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

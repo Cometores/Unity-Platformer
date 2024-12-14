@@ -1,11 +1,12 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TrapSaw : MonoBehaviour
 {
     private Animator _anim;
     private SpriteRenderer _sr;
-    
+
     [SerializeField] private float moveSpeed = 3;
     [SerializeField] private float cooldown = 1;
     [SerializeField] private Transform[] wayPoints;
@@ -23,7 +24,7 @@ public class TrapSaw : MonoBehaviour
         _anim = GetComponent<Animator>();
         _sr = GetComponent<SpriteRenderer>();
     }
-    
+
     private void Start()
     {
         UpdateWaypointsInfo();
@@ -32,6 +33,18 @@ public class TrapSaw : MonoBehaviour
 
     private void UpdateWaypointsInfo()
     {
+        var waypoints = new List<TrapSawWaypoint>(GetComponentsInChildren<TrapSawWaypoint>());
+
+        if (waypoints.Count != wayPoints.Length)
+        {
+            wayPoints = new Transform[waypoints.Count];
+
+            for (int i = 0; i < waypoints.Count; i++)
+            {
+                wayPoints[i] = waypoints[i].transform;
+            }
+        }
+        
         _wayPointPositions = new Vector3[wayPoints.Length];
 
         for (int i = 0; i < wayPoints.Length; i++)
@@ -43,10 +56,10 @@ public class TrapSaw : MonoBehaviour
     private void Update()
     {
         _anim.SetBool(Active, _canMove);
-        
+
         if (_canMove == false)
             return;
-        
+
         transform.position = Vector2.MoveTowards(transform.position, _wayPointPositions[wayPointIndex],
             moveSpeed * Time.deltaTime);
 
@@ -65,7 +78,7 @@ public class TrapSaw : MonoBehaviour
     private IEnumerator StopMovement(float delay)
     {
         _canMove = false;
-        
+
         yield return new WaitForSeconds(delay);
 
         _canMove = true;
