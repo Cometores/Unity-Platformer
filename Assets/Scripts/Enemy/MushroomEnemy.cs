@@ -1,17 +1,8 @@
-using System;
 using UnityEngine;
 
 public class MushroomEnemy : Enemy
 {
-    private BoxCollider2D _boxCollider;
     private static readonly int XVelocity = Animator.StringToHash("xVelocity");
-
-    protected override void Awake()
-    {
-        base.Awake();
-        
-        _boxCollider = GetComponent<BoxCollider2D>();
-    }
 
     protected override void Update()
     {
@@ -19,12 +10,12 @@ public class MushroomEnemy : Enemy
 
         Anim.SetFloat(XVelocity, Rb.linearVelocityX);
 
-        if (isDead) return;
+        if (IsDead) return;
 
         HandleCollision();
         HandleMovement();
 
-        if (isGrounded)
+        if (IsGrounded)
             HandleTurnAround();
     }
 
@@ -32,24 +23,18 @@ public class MushroomEnemy : Enemy
     {
         if (!IsGroundInFront || IsWallDetected)
         {
-            FLip();
-            idleTimer = idleDuration;
+            Flip();
+            IdleTimer = idleDuration;
             Rb.linearVelocity = Vector2.zero;
         }
     }
 
     private void HandleMovement()
     {
-        if (idleTimer > 0)
+        if (IdleTimer > 0)
             return;
 
         if (IsGroundInFront)
             Rb.linearVelocityX = moveSpeed * FacingDir;
-    }
-
-    public override void Die()
-    {
-        base.Die();
-        _boxCollider.enabled = false;
     }
 }

@@ -1,32 +1,35 @@
-using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
     protected Animator Anim;
     protected Rigidbody2D Rb;
+    protected Collider2D Col;
 
-    [SerializeField] private GameObject damageTrigger;
-    [Space]
+    protected Transform Player;
+    [SerializeField] protected GameObject damageTrigger;
+    
+    [Header("General info")]
     [SerializeField] protected float moveSpeed = 2f;
     [SerializeField] protected float idleDuration = 1.5f;
-    protected float idleTimer;
+    protected bool CanMove = true;
+    protected float IdleTimer;
     
-    [FormerlySerializedAs("deathImpact")]
     [Header("Death details")]
     [SerializeField] private float deathImpactSpeed = 5;
     [SerializeField] private float deathRotationSpeed = 150;
     private int _deathRotationDirection = 1;
-    protected bool isDead;
+    protected bool IsDead;
     
     [Header("Basic collision")]
     [SerializeField] protected float groundCheckDistance = 1.1f;
     [SerializeField] protected float wallCheckDistance = .7f;
     [SerializeField] protected LayerMask whatIsGround;
+    [SerializeField] protected LayerMask whatIsPlayer;
+    
     [SerializeField] protected Transform groundCheck;
-    protected bool isGrounded;
+    protected bool IsGrounded;
     protected bool IsWallDetected;
     protected bool IsGroundInFront;
 
@@ -38,22 +41,35 @@ public class Enemy : MonoBehaviour
     {
         Anim = GetComponent<Animator>();
         Rb = GetComponent<Rigidbody2D>();
+        Col =  GetComponent<Collider2D>();
+    }
+
+    protected virtual void Start()
+    {
+        InvokeRepeating(nameof(UpdatePlayersRef), 0, 1);
+    }
+
+    private void UpdatePlayersRef()
+    {
+        if (Player == null)
+            Player = GameManager.Instance.player.transform;
     }
 
     protected virtual void Update()
     {
-        idleTimer -= Time.deltaTime;
+        IdleTimer -= Time.deltaTime;
         
-        if (isDead)
+        if (IsDead)
             HandleDeathRotation();
     }
 
     public virtual void Die()
     {
+        Col.enabled = false;
         damageTrigger.SetActive(false);
         Anim.SetTrigger(Hit);
         Rb.linearVelocityY = deathImpactSpeed;
-        isDead = true;
+        IsDead = true;
 
         if (Random.Range(0, 100) < 50)
             _deathRotationDirection *= -1;
@@ -66,7 +82,7 @@ public class Enemy : MonoBehaviour
     
     protected virtual void HandleCollision()
     {
-        isGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, whatIsGround);
+        IsGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, whatIsGround);
         IsGroundInFront = Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
         IsWallDetected = Physics2D.Raycast(transform.position, Vector2.right * FacingDir, wallCheckDistance,
             whatIsGround);
@@ -74,18 +90,18 @@ public class Enemy : MonoBehaviour
     
     protected virtual void HandleFlip(float xValue)
     {
-        if (xValue < 0 && FacingRight || xValue > 0 && !FacingRight)
-            FLip();
+        if (xValue < transform.position.x && FacingRight || xValue > transform.position.x && !FacingRight)
+            Flip();
     }
 
-    protected virtual void FLip()
+    protected virtual void Flip()
     {
         transform.Rotate(0, 180, 0);
         FacingRight = !FacingRight;
         FacingDir *= -1;
     }
     
-    private void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
         Gizmos.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y - groundCheckDistance));
         Gizmos.DrawLine(groundCheck.position, new Vector2(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
