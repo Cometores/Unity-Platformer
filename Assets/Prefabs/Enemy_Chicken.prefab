@@ -258,7 +258,7 @@ GameObject:
   - component: {fileID: 9017739154188523660}
   - component: {fileID: 2187629675649752677}
   - component: {fileID: 2542514611519304396}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: DamageTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -314,8 +314,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.061309338, y: 0.00000023841858}
-  m_Size: {x: 1.2510309, y: 1.6035552}
+  m_Offset: {x: 0.013955593, y: 0.00000023841858}
+  m_Size: {x: 2.4443483, y: 2.4443483}
   m_Direction: 0
 --- !u!114 &2542514611519304396
 MonoBehaviour:
