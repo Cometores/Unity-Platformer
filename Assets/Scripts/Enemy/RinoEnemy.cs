@@ -9,9 +9,6 @@ public class RinoEnemy : Enemy
     [SerializeField] private float speedUpRate = .6f;
     private float _defaultSpeed;
     [SerializeField] private Vector2 impactPower;
-    [SerializeField] private float detectionRange;
-    private bool _playerDetected;
-    private static readonly int XVelocity = Animator.StringToHash("xVelocity");
     private static readonly int HitWall = Animator.StringToHash("hitWall");
 
     protected override void Start()
@@ -26,9 +23,6 @@ public class RinoEnemy : Enemy
     {
         base.Update();
         
-        Anim.SetFloat(XVelocity, Rb.linearVelocityX);
-        
-        HandleCollision();
         HandleCharge();
     }
 
@@ -36,11 +30,7 @@ public class RinoEnemy : Enemy
     {
         if (!CanMove) return;
 
-        moveSpeed += Time.deltaTime * speedUpRate;
-        if (moveSpeed >= maxSpeed)
-            maxSpeed = moveSpeed;
-        
-        Rb.linearVelocityX = moveSpeed * FacingDir;
+        HandleSpeedUp();
 
         if (IsWallDetected)
             WallHit();
@@ -48,6 +38,15 @@ public class RinoEnemy : Enemy
         if (!IsGroundInFront)
             TurnAround();
         
+    }
+
+    private void HandleSpeedUp()
+    {
+        moveSpeed += Time.deltaTime * speedUpRate;
+        if (moveSpeed >= maxSpeed)
+            maxSpeed = moveSpeed;
+        
+        Rb.linearVelocityX = moveSpeed * FacingDir;
     }
 
     private void TurnAround()
@@ -63,7 +62,6 @@ public class RinoEnemy : Enemy
     {
         CanMove = false;
         moveSpeed = _defaultSpeed;
-        moveSpeed = _defaultSpeed;
         Anim.SetBool(HitWall, true);
         Rb.linearVelocity = new Vector2(impactPower.x * -FacingDir, impactPower.y);
     }
@@ -78,17 +76,8 @@ public class RinoEnemy : Enemy
     {
         base.HandleCollision();
 
-        _playerDetected = Physics2D.Raycast(transform.position, Vector2.right * FacingDir, detectionRange, whatIsPlayer);
-        if (_playerDetected)
+        if (IsPlayerDetected)
             CanMove = true;
     }
 
-    protected override void OnDrawGizmos()
-    {
-        base.OnDrawGizmos();
-        
-        Gizmos.DrawLine(transform.position,
-            new Vector2(transform.position.x + (detectionRange * FacingDir), transform.position.y));
-
-    }
 }

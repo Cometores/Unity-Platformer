@@ -8,11 +8,8 @@ public class MushroomEnemy : Enemy
     {
         base.Update();
 
-        Anim.SetFloat(XVelocity, Rb.linearVelocityX);
-
         if (IsDead) return;
 
-        HandleCollision();
         HandleMovement();
 
         if (IsGrounded)

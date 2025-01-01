@@ -7,10 +7,7 @@ public class ChickenEnemy : Enemy
     [SerializeField] private float detectionRange;
 
     private float _aggroTimer;
-    private bool _playerDetected;
     private bool _canFlip = true;
-
-    private static readonly int XVelocity = Animator.StringToHash("xVelocity");
 
     protected override void Update()
     {
@@ -18,10 +15,9 @@ public class ChickenEnemy : Enemy
         
         if (IsDead) return;
         
-        Anim.SetFloat(XVelocity, Rb.linearVelocityX);
         _aggroTimer -= Time.deltaTime;
 
-        if (_playerDetected)
+        if (IsPlayerDetected)
         {
             CanMove = true;
             _aggroTimer = aggroDuration;
@@ -32,7 +28,6 @@ public class ChickenEnemy : Enemy
             CanMove = false;
         }
 
-        HandleCollision();
         HandleMovement();
 
         if (IsGrounded)
@@ -76,13 +71,6 @@ public class ChickenEnemy : Enemy
         base.Flip();
 
         _canFlip = true;
-    }
-
-    protected override void HandleCollision()
-    {
-        base.HandleCollision();
-
-        _playerDetected = Physics2D.Raycast(transform.position, Vector2.right * FacingDir, detectionRange, whatIsPlayer); 
     }
 
     protected override void OnDrawGizmos()
