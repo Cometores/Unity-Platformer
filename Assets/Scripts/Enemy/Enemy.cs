@@ -17,9 +17,9 @@ public class Enemy : MonoBehaviour
     protected float IdleTimer;
 
     [Header("Death details")]
-    [SerializeField] private float deathImpactSpeed = 5;
-    [SerializeField] private float deathRotationSpeed = 150;
-    private int _deathRotationDirection = 1;
+    [SerializeField] protected float deathImpactSpeed = 5;
+    [SerializeField] protected float deathRotationSpeed = 150;
+    protected int DeathRotationDirection = 1;
     protected bool IsDead;
 
     [Header("Basic collision")]
@@ -37,7 +37,8 @@ public class Enemy : MonoBehaviour
 
     protected int FacingDir = -1;
     protected bool FacingRight = false;
-    private static readonly int Hit = Animator.StringToHash("hit");
+    
+    protected static readonly int Hit = Animator.StringToHash("hit");
     private static readonly int XVelocity = Animator.StringToHash("xVelocity");
 
     protected virtual void Awake()
@@ -87,12 +88,14 @@ public class Enemy : MonoBehaviour
         IsDead = true;
 
         if (Random.Range(0, 100) < 50)
-            _deathRotationDirection *= -1;
+            DeathRotationDirection *= -1;
+        
+        Destroy(gameObject, 10);
     }
 
     private void HandleDeathRotation()
     {
-        transform.Rotate(0, 0, (deathRotationSpeed * _deathRotationDirection) * Time.deltaTime);
+        transform.Rotate(0, 0, (deathRotationSpeed * DeathRotationDirection) * Time.deltaTime);
     }
 
     protected virtual void HandleCollision()
