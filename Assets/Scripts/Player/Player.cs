@@ -96,7 +96,7 @@ public class Player : MonoBehaviour
 
     private void HandleEnemyDetection()
     {
-        if (_rb.linearVelocityY >= 0)
+        if (_rb.linearVelocityY >= 0 || !enemyCheck)
             return;
         
         Collider2D[] detectedEnemies = Physics2D.OverlapCircleAll(enemyCheck.position, enemyCheckRadius, whatIsEnemy);
