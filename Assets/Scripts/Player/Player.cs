@@ -35,8 +35,10 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform enemyCheck;
     [SerializeField] private float enemyCheckRadius;
 
-    [Header("VFX")]
+    [Header("Player visuals")]
+    [SerializeField] private AnimatorOverrideController[] animators;
     [SerializeField] private GameObject deathVfx;
+    [SerializeField] private int skinId;
 
     private bool _isFacingRight = true;
     private bool _isGrounded;
@@ -71,6 +73,8 @@ public class Player : MonoBehaviour
     {
         _defaultGravityScale = _rb.gravityScale;
         RespawnFinished(false);
+
+        LoadSkin();
     }
 
     private void Update()
@@ -83,6 +87,7 @@ public class Player : MonoBehaviour
             HandleAnimation();
             return;
         }
+
         if (_isKnocked) return;
 
         HandleEnemyDetection();
@@ -94,11 +99,21 @@ public class Player : MonoBehaviour
         HandleAnimation();
     }
 
+    private void LoadSkin()
+    {
+        SkinManager skinManager = SkinManager.instance;
+        
+        if (!skinManager)
+            return;
+
+        _anim.runtimeAnimatorController = animators[skinManager.ChosenSkinId];
+    }
+
     private void HandleEnemyDetection()
     {
         if (_rb.linearVelocityY >= 0 || !enemyCheck)
             return;
-        
+
         Collider2D[] detectedEnemies = Physics2D.OverlapCircleAll(enemyCheck.position, enemyCheckRadius, whatIsEnemy);
         foreach (var enemy in detectedEnemies)
         {
@@ -152,7 +167,7 @@ public class Player : MonoBehaviour
 
         _rb.linearVelocity = Vector2.zero;
         _rb.AddForce(direction, ForceMode2D.Impulse);
-        
+
         yield return new WaitForSeconds(duration);
 
         _canBeControlled = true;

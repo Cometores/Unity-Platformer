@@ -12259,50 +12259,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &226093416
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 226093417}
-  - component: {fileID: 226093418}
-  m_Layer: 7
-  m_Name: EnemyCheck
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &226093417
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 226093416}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.87, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2040470633}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &226093418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 226093416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6ed71ee92cbf4e4bb922dda5739d7f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &416741914
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34019,11 +33975,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb98b81c44be5b94a96d339b1290c0f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &2040470633 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4479206699977892501, guid: 5abd403e6aa04d940abb8c2dbdf3d6fc, type: 3}
-  m_PrefabInstance: {fileID: 5742836858913547279}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2070021264
 GameObject:
   m_ObjectHideFlags: 0
@@ -34431,46 +34382,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 228416389088342729, guid: 5abd403e6aa04d940abb8c2dbdf3d6fc, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184533742287248457, guid: 5abd403e6aa04d940abb8c2dbdf3d6fc, type: 3}
-      propertyPath: m_Size.x
-      value: 1.0888536
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184533742287248457, guid: 5abd403e6aa04d940abb8c2dbdf3d6fc, type: 3}
-      propertyPath: m_Size.y
-      value: 1.6458669
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184533742287248457, guid: 5abd403e6aa04d940abb8c2dbdf3d6fc, type: 3}
-      propertyPath: m_Offset.x
-      value: 0.001347661
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184533742287248457, guid: 5abd403e6aa04d940abb8c2dbdf3d6fc, type: 3}
-      propertyPath: m_Offset.y
-      value: 0.0056364536
-      objectReference: {fileID: 0}
-    - target: {fileID: 3918057423297709804, guid: 5abd403e6aa04d940abb8c2dbdf3d6fc, type: 3}
-      propertyPath: enemyCheck
-      value: 
-      objectReference: {fileID: 226093417}
-    - target: {fileID: 3918057423297709804, guid: 5abd403e6aa04d940abb8c2dbdf3d6fc, type: 3}
-      propertyPath: enemyCheckRadius
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3918057423297709804, guid: 5abd403e6aa04d940abb8c2dbdf3d6fc, type: 3}
-      propertyPath: knockbackDuration
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 3918057423297709804, guid: 5abd403e6aa04d940abb8c2dbdf3d6fc, type: 3}
-      propertyPath: whatIsEnemy.m_Bits
-      value: 64
-      objectReference: {fileID: 0}
-    - target: {fileID: 3918057423297709804, guid: 5abd403e6aa04d940abb8c2dbdf3d6fc, type: 3}
-      propertyPath: groundCheckDistance
-      value: 0.95
-      objectReference: {fileID: 0}
     - target: {fileID: 4479206699977892501, guid: 5abd403e6aa04d940abb8c2dbdf3d6fc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.58
@@ -34513,10 +34424,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 4479206699977892501, guid: 5abd403e6aa04d940abb8c2dbdf3d6fc, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 226093417}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5abd403e6aa04d940abb8c2dbdf3d6fc, type: 3}
 --- !u!1001 &6996474651372677142
