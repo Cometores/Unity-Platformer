@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class UI_ScriptSelection : MonoBehaviour
+public class UI_SkinSelection : MonoBehaviour
 {
     [SerializeField] private Animator skinDisplay;
     private int _currentIndex;

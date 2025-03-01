@@ -82,6 +82,19 @@ public class GameManager : MonoBehaviour
     public void LoadNextLevel()
     {
         int nextLevelIndex = currentLevelIndex + 1;
+        
+        if (IsFinalLevel())
+            return;
+        
+        PlayerPrefs.SetInt($"Level{nextLevelIndex}Unlocked", 1);
+        PlayerPrefs.SetInt("ContinueLevelNumber", nextLevelIndex);
+        
         SceneManager.LoadScene($"Level_{nextLevelIndex}");
+    }
+
+    private bool IsFinalLevel()
+    {
+        int lastLevelIndex = SceneManager.sceneCountInBuildSettings - 1;
+        return currentLevelIndex == lastLevelIndex;
     }
 }
