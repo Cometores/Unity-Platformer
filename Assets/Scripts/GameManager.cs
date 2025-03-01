@@ -1,10 +1,14 @@
 using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    
+    [Header("Level Management")]
+    [SerializeField] private int currentLevelIndex;
 
     [Header("Player")]
     [SerializeField] private GameObject playerPrefab;
@@ -36,6 +40,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
         CollectFruitsInfo();
     }
 
@@ -72,5 +77,11 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         GameObject newObject = Instantiate(prefab, newPosition, Quaternion.identity);
+    }
+
+    public void LoadNextLevel()
+    {
+        int nextLevelIndex = currentLevelIndex + 1;
+        SceneManager.LoadScene($"Level_{nextLevelIndex}");
     }
 }
