@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
@@ -6,8 +7,10 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    private UI_InGame _inGameUI;
     
     [Header("Level Management")]
+    [SerializeField] private float levelTimer;
     [SerializeField] private int currentLevelIndex;
 
     [Header("Player")]
@@ -29,25 +32,23 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null)
-        {
             Instance = this;
-        }
         else
-        {
             Destroy(gameObject);
-        }
     }
 
     private void Start()
     {
+        _inGameUI = UI_InGame.instance;
         currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
+        
         CollectFruitsInfo();
     }
 
-    private void CollectFruitsInfo()
+    private void Update()
     {
-        Fruit[] allFruits = FindObjectsByType<Fruit>(FindObjectsSortMode.None);
-        totalFruits = allFruits.Length;
+        levelTimer += Time.deltaTime;
+        _inGameUI.UpdateTimer(levelTimer);
     }
 
     private IEnumerator RespawnCoroutine()
@@ -62,7 +63,12 @@ public class GameManager : MonoBehaviour
 
     public void RespawnPlayer() => StartCoroutine(RespawnCoroutine());
 
-    public void AddFruit() => fruitsCollected++;
+    public void AddFruit()
+    {
+        fruitsCollected++;
+        _inGameUI.UpdateFruitUI(fruitsCollected, totalFruits);
+    }
+
     public bool FruitsHaveRandomLook() => fruitsAreRandom;
 
     public void CreateObject(GameObject prefab, Transform target, float delay = 0)
@@ -89,6 +95,9 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt($"Level{nextLevelIndex}Unlocked", 1);
         PlayerPrefs.SetInt("ContinueLevelNumber", nextLevelIndex);
         
+        SaveBestTime();
+        SaveFruitsInfo();
+        
         SceneManager.LoadScene($"Level_{nextLevelIndex}");
     }
 
@@ -96,5 +105,31 @@ public class GameManager : MonoBehaviour
     {
         int lastLevelIndex = SceneManager.sceneCountInBuildSettings - 1;
         return currentLevelIndex == lastLevelIndex;
+    }
+
+    private void SaveBestTime()
+    {
+        PlayerPrefs.SetFloat($"Level{currentLevelIndex}BestTime", levelTimer);
+    }
+    
+    private void CollectFruitsInfo()
+    {
+        Fruit[] allFruits = FindObjectsByType<Fruit>(FindObjectsSortMode.None);
+        totalFruits = allFruits.Length;
+        
+        _inGameUI.UpdateFruitUI(fruitsCollected, totalFruits);
+        
+        PlayerPrefs.SetInt("Level" + currentLevelIndex + "TotalFruits", totalFruits);
+    }
+
+    private void SaveFruitsInfo()
+    {
+        int maxFruits = PlayerPrefs.GetInt($"Level{currentLevelIndex}FruitsCollected");
+        
+        if (fruitsCollected > maxFruits)
+            PlayerPrefs.SetInt($"Level{currentLevelIndex}FruitsCollected", fruitsCollected);
+
+        int totalFruitsInBank = PlayerPrefs.GetInt("TotalFruitsAmount");
+        PlayerPrefs.SetInt("TotalFruitsAmount", totalFruitsInBank + fruitsCollected);
     }
 }
