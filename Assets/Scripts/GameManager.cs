@@ -61,13 +61,28 @@ public class GameManager : MonoBehaviour
 
     public void UpdateRespawnPoint(Transform newRespawnPoint) => respawnPoint = newRespawnPoint;
 
-    public void RespawnPlayer() => StartCoroutine(RespawnCoroutine());
+    public void RespawnPlayer()
+    {
+        DifficultyManager difficultyManager = DifficultyManager.instance;
+        if (difficultyManager != null && difficultyManager.difficulty == DifficultyType.Hard)
+            return;
+        
+        StartCoroutine(RespawnCoroutine());
+    }
 
     public void AddFruit()
     {
         fruitsCollected++;
         _inGameUI.UpdateFruitUI(fruitsCollected, totalFruits);
     }
+
+    public void RemoveFruit()
+    {
+        fruitsCollected--;
+        _inGameUI.UpdateFruitUI(fruitsCollected, totalFruits);
+    }
+
+    public int FruitsCollected() => fruitsCollected;
 
     public bool FruitsHaveRandomLook() => fruitsAreRandom;
 
@@ -85,6 +100,11 @@ public class GameManager : MonoBehaviour
         GameObject newObject = Instantiate(prefab, newPosition, Quaternion.identity);
     }
 
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene($"Level_{currentLevelIndex}");
+    }
+    
     public void LoadNextLevel()
     {
         int nextLevelIndex = currentLevelIndex + 1;

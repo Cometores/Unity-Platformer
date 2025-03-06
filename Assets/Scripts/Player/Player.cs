@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private DifficultyType _gameDifficulty;
+    private GameManager _gameManager;
+    
     private Rigidbody2D _rb;
     private Animator _anim;
     private CapsuleCollider2D _cd;
@@ -71,9 +74,11 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        _gameManager = GameManager.Instance;
         _defaultGravityScale = _rb.gravityScale;
+        
+        SetGameDifficulty();
         RespawnFinished(false);
-
         LoadSkin();
     }
 
@@ -107,6 +112,31 @@ public class Player : MonoBehaviour
             return;
 
         _anim.runtimeAnimatorController = animators[skinManager.ChosenSkinId];
+    }
+
+    public void Damage()
+    {
+        if (_gameDifficulty == DifficultyType.Normal)
+        {
+            if (_gameManager.FruitsCollected() <= 0)
+                _gameManager.RestartLevel();
+            else
+                _gameManager.RemoveFruit();
+            
+            return;
+        }
+
+        if (_gameDifficulty == DifficultyType.Hard)
+        {
+            _gameManager.RestartLevel();
+        }
+    }
+    
+    private void SetGameDifficulty()
+    {
+        DifficultyManager difficultyManager = DifficultyManager.instance;
+        if (difficultyManager != null)
+            _gameDifficulty = difficultyManager.difficulty;
     }
 
     private void HandleEnemyDetection()
