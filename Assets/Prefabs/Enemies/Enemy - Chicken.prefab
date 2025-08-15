@@ -92,7 +92,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -231,7 +231,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6bdf050ef09c914d91edd3c7f6b8ab3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageTrigger: {fileID: 5830901830092630908}
   moveSpeed: 5
   idleDuration: 1.5
   deathImpactSpeed: 5
@@ -245,6 +244,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   groundCheck: {fileID: 4031324578990735160}
+  playerDetectionDistance: 15
   aggroDuration: 3
   detectionRange: 7
 --- !u!1 &5830901830092630908
