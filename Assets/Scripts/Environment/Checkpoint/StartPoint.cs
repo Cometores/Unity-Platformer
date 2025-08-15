@@ -1,15 +1,18 @@
 using UnityEngine;
 
-public class StartPoint : MonoBehaviour
+namespace Environment.Checkpoint
 {
-    private static readonly int Activate = Animator.StringToHash("activate");
-    private Animator anim => GetComponent<Animator>();
-
-    private void OnTriggerExit2D(Collider2D other)
+    public class StartPoint : MonoBehaviour
     {
-        Player player = other.GetComponent<Player>();
+        private static readonly int Activate = Animator.StringToHash("activate");
+        private Animator anim => GetComponent<Animator>();
+
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            Player.Player player = other.GetComponent<Player.Player>();
         
-        if(player != null)
-            anim.SetTrigger(Activate);
+            if(player != null)
+                anim.SetTrigger(Activate);
+        }
     }
 }

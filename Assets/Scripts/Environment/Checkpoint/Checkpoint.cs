@@ -1,27 +1,31 @@
+using Managers;
 using UnityEngine;
 
-public class Checkpoint : MonoBehaviour
+namespace Environment.Checkpoint
 {
-    private Animator _anim => GetComponent<Animator>();
-    private bool _active;
-    private static readonly int Activate = Animator.StringToHash("activate");
-
-    private void OnTriggerEnter2D(Collider2D other)
+    public class Checkpoint : MonoBehaviour
     {
-        if (_active) return;
+        private Animator _anim => GetComponent<Animator>();
+        private bool _active;
+        private static readonly int Activate = Animator.StringToHash("activate");
 
-        Player player = other.GetComponent<Player>();
-
-        if (player)
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            ActivateCheckpoint();
-        }
-    }
+            if (_active) return;
 
-    private void ActivateCheckpoint()
-    {
-        _active = true;
-        _anim.SetTrigger(Activate);
-        GameManager.Instance.UpdateRespawnPoint(transform);
+            Player.Player player = other.GetComponent<Player.Player>();
+
+            if (player)
+            {
+                ActivateCheckpoint();
+            }
+        }
+
+        private void ActivateCheckpoint()
+        {
+            _active = true;
+            _anim.SetTrigger(Activate);
+            GameManager.Instance.UpdateRespawnPoint(transform);
+        }
     }
 }

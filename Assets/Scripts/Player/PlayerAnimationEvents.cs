@@ -1,13 +1,16 @@
 using UnityEngine;
 
-public class PlayerAnimationEvents : MonoBehaviour
+namespace Player
 {
-    private Player _player;
-
-    private void Awake()
+    public class PlayerAnimationEvents : MonoBehaviour
     {
-        _player = GetComponentInParent<Player>();
-    }
+        private Player _player;
 
-    public void FinishRespawn() => _player.RespawnFinished(true);
+        private void Awake()
+        {
+            _player = GetComponentInParent<Player>();
+        }
+
+        public void FinishRespawn() => _player.RespawnFinished(true);
+    }
 }

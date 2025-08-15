@@ -1,3 +1,4 @@
+using Managers;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -51,11 +52,12 @@ public class Fruit : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Player player = other.GetComponent<Player>();
+        Player.Player player = other.GetComponent<Player.Player>();
 
         if (player)
         {
             _gameManager.AddFruit();
+            AudioManager.Instance.PlaySfx(8);
             Destroy(gameObject);
 
             Instantiate(pickupVFX, transform.position, Quaternion.identity);

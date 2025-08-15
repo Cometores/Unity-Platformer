@@ -1,41 +1,50 @@
-using System;
+using Managers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class UI_MainMenu : MonoBehaviour
+namespace UI
 {
-    public string sceneName;
-
-    [SerializeField] private GameObject[] uiElements;
-    [SerializeField] private GameObject continueButton;
-
-    private void Start()
+    public class UI_MainMenu : MonoBehaviour
     {
-        if (HasLevelProgression())
-            continueButton.SetActive(true);
-    }
+        public string sceneName;
 
-    public void NewGame()
-    {
-        SceneManager.LoadScene(sceneName);
-    }
+        [SerializeField] private GameObject[] uiElements;
+        [SerializeField] private GameObject continueButton;
+
+        private void Start()
+        {
+            if (HasLevelProgression())
+                continueButton.SetActive(true);
+        }
+
+        public void NewGame()
+        {
+            SceneManager.LoadScene(sceneName);
+            AudioManager.Instance.PlaySfx(4);
+        }
 
     
-    public void SwitchUI(GameObject uiToEnable)
-    {
-        foreach (var uiElement in uiElements)
+        public void SwitchUI(GameObject uiToEnable)
         {
-            uiElement.SetActive(false);
-        }
+            foreach (var uiElement in uiElements)
+            {
+                uiElement.SetActive(false);
+            }
         
-        uiToEnable.SetActive(true);
-    }
+            uiToEnable.SetActive(true);
+            
+            AudioManager.Instance.PlaySfx(4);
+        }
 
-    private bool HasLevelProgression() => PlayerPrefs.GetInt("ContinueLevelNumber", 0) > 0;
+        private bool HasLevelProgression() => PlayerPrefs.GetInt("ContinueLevelNumber", 0) > 0;
 
-    public void ContinueGame()
-    {
-        int levelToLoad = PlayerPrefs.GetInt("ContinueLevelNumber", 0);
-        SceneManager.LoadScene($"Level_{levelToLoad}");
+        public void ContinueGame()
+        {
+            int levelToLoad = PlayerPrefs.GetInt("ContinueLevelNumber", 0);
+            // int difficulty = PlayerPrefs.GetInt("Difficulty", 0);
+            // int skin = PlayerPrefs.GetInt("Skin");
+            
+            SceneManager.LoadScene($"Level_{levelToLoad}");
+        }
     }
 }

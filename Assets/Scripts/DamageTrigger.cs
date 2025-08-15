@@ -4,7 +4,7 @@ public class DamageTrigger : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Player player = other.gameObject.GetComponent<Player>();
+        Player.Player player = other.gameObject.GetComponent<Player.Player>();
 
         if (player)
         {

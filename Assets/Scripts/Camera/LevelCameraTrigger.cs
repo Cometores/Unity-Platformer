@@ -13,7 +13,7 @@ namespace Camera
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            Player player = other.gameObject.GetComponent<Player>();
+            Player.Player player = other.gameObject.GetComponent<Player.Player>();
 
             if (player)
             {
@@ -24,7 +24,7 @@ namespace Camera
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            Player player = other.gameObject.GetComponent<Player>();
+            Player.Player player = other.gameObject.GetComponent<Player.Player>();
 
             if (player)
             {

@@ -1,5 +1,8 @@
 using UnityEngine;
 
-public class TrapSawWaypoint : MonoBehaviour
+namespace Environment.Traps
 {
+    public class TrapSawWaypoint : MonoBehaviour
+    {
+    }
 }

@@ -1,37 +1,40 @@
 using UnityEngine;
 
-public class MushroomEnemy : Enemy
+namespace Enemy
 {
-    private static readonly int XVelocity = Animator.StringToHash("xVelocity");
-
-    protected override void Update()
+    public class MushroomEnemy : Enemy
     {
-        base.Update();
+        private static readonly int XVelocity = Animator.StringToHash("xVelocity");
 
-        if (IsDead) return;
-
-        HandleMovement();
-
-        if (IsGrounded)
-            HandleTurnAround();
-    }
-
-    private void HandleTurnAround()
-    {
-        if (!IsGroundInFront || IsWallDetected)
+        protected override void Update()
         {
-            Flip();
-            IdleTimer = idleDuration;
-            Rb.linearVelocity = Vector2.zero;
+            base.Update();
+
+            if (IsDead) return;
+
+            HandleMovement();
+
+            if (IsGrounded)
+                HandleTurnAround();
         }
-    }
 
-    private void HandleMovement()
-    {
-        if (IdleTimer > 0)
-            return;
+        private void HandleTurnAround()
+        {
+            if (!IsGroundInFront || IsWallDetected)
+            {
+                Flip();
+                IdleTimer = idleDuration;
+                Rb.linearVelocity = Vector2.zero;
+            }
+        }
 
-        if (IsGroundInFront)
-            Rb.linearVelocityX = moveSpeed * FacingDir;
+        private void HandleMovement()
+        {
+            if (IdleTimer > 0)
+                return;
+
+            if (IsGroundInFront)
+                Rb.linearVelocityX = moveSpeed * FacingDir;
+        }
     }
 }

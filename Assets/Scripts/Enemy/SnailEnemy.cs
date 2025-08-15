@@ -1,90 +1,93 @@
 using UnityEngine;
 
-public class SnailEnemy : Enemy
+namespace Enemy
 {
-    [Header("Snail details")]
-    [SerializeField] private SnailBodyEnemy bodyPrefab;
-    [SerializeField] private float maxSpeed = 10;
-    private bool _hasBody = true;
-    private static readonly int WallHit = Animator.StringToHash("wallHit");
-
-    protected override void Update()
+    public class SnailEnemy : Enemy
     {
-        base.Update();
+        [Header("Snail details")]
+        [SerializeField] private SnailBodyEnemy bodyPrefab;
+        [SerializeField] private float maxSpeed = 10;
+        private bool _hasBody = true;
+        private static readonly int WallHit = Animator.StringToHash("wallHit");
 
-        if (IsDead) return;
-
-        HandleMovement();
-
-        if (IsGrounded)
-            HandleTurnAround();
-    }
-
-    public override void Die()
-    {
-        if (_hasBody)
+        protected override void Update()
         {
-            CanMove = false;
-            _hasBody = false;
-            Anim.SetTrigger(Hit);
+            base.Update();
 
-            Rb.linearVelocity = Vector2.zero;
-            idleDuration = 0;
-        }
-        else if(CanMove == false && _hasBody == false)
-        {
-            Anim.SetTrigger(Hit);
-            CanMove = true;
-            moveSpeed = maxSpeed;
-        }
-        else
-        {
-            base.Die();
-        }
-    }
+            if (IsDead) return;
 
-    private void HandleTurnAround()
-    {
-        bool canFlipFromLedge = !IsGroundInFront && _hasBody;
-        if (canFlipFromLedge || IsWallDetected)
-        {
-            Flip();
-            IdleTimer = idleDuration;
-            Rb.linearVelocity = Vector2.zero;
-        }
-    }
+            HandleMovement();
 
-    private void HandleMovement()
-    {
-        if (IdleTimer > 0)
-            return;
+            if (IsGrounded)
+                HandleTurnAround();
+        }
+
+        public override void Die()
+        {
+            if (_hasBody)
+            {
+                CanMove = false;
+                _hasBody = false;
+                Anim.SetTrigger(Hit);
+
+                Rb.linearVelocity = Vector2.zero;
+                idleDuration = 0;
+            }
+            else if(CanMove == false && _hasBody == false)
+            {
+                Anim.SetTrigger(Hit);
+                CanMove = true;
+                moveSpeed = maxSpeed;
+            }
+            else
+            {
+                base.Die();
+            }
+        }
+
+        private void HandleTurnAround()
+        {
+            bool canFlipFromLedge = !IsGroundInFront && _hasBody;
+            if (canFlipFromLedge || IsWallDetected)
+            {
+                Flip();
+                IdleTimer = idleDuration;
+                Rb.linearVelocity = Vector2.zero;
+            }
+        }
+
+        private void HandleMovement()
+        {
+            if (IdleTimer > 0)
+                return;
         
-        if (CanMove == false)
-            return;
+            if (CanMove == false)
+                return;
 
-        if (IsGroundInFront)
-            Rb.linearVelocityX = moveSpeed * FacingDir;
-    }
+            if (IsGroundInFront)
+                Rb.linearVelocityX = moveSpeed * FacingDir;
+        }
 
-    private void CreateBody()
-    {
-        var body = Instantiate(bodyPrefab, transform.position, Quaternion.identity);
-
-        if (Random.Range(0, 100) < 50)
-            DeathRotationDirection = DeathRotationDirection * -1;
-        
-        body.SetupBody(deathImpactSpeed, deathRotationSpeed * DeathRotationDirection, FacingDir);
-        
-        Destroy(body, 10);
-    }
-
-    protected override void Flip()
-    {
-        base.Flip();
-
-        if (_hasBody == false)
+        private void CreateBody()
         {
-            Anim.SetTrigger(WallHit);
+            var body = Instantiate(bodyPrefab, transform.position, Quaternion.identity);
+
+            if (Random.Range(0, 100) < 50)
+                DeathRotationDirection = DeathRotationDirection * -1;
+        
+            body.SetupBody(deathImpactSpeed, deathRotationSpeed * DeathRotationDirection, FacingDir);
+        
+            Destroy(body, 10);
+        }
+
+        protected override void Flip()
+        {
+            base.Flip();
+
+            if (_hasBody == false)
+            {
+                Anim.SetTrigger(WallHit);
+            }
         }
     }
 }

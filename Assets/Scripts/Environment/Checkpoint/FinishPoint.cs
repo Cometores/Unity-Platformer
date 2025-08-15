@@ -1,18 +1,24 @@
+using Managers;
 using UnityEngine;
 
-public class FinishPoint : MonoBehaviour
+namespace Environment.Checkpoint
 {
-    private static readonly int Activate = Animator.StringToHash("activate");
-    private Animator _anim => GetComponent<Animator>();
-    
-    private void OnTriggerEnter2D(Collider2D other)
+    public class FinishPoint : MonoBehaviour
     {
-        Player player = other.GetComponent<Player>();
-
-        if (player)
+        private static readonly int Activate = Animator.StringToHash("activate");
+        private Animator _anim => GetComponent<Animator>();
+    
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            _anim.SetTrigger(Activate);
-            GameManager.Instance.LoadNextLevel();
+            Player.Player player = other.GetComponent<Player.Player>();
+
+            if (player)
+            {
+                AudioManager.Instance.PlaySfx(2);
+                
+                _anim.SetTrigger(Activate);
+                GameManager.Instance.LoadNextLevel();
+            }
         }
     }
 }

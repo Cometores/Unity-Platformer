@@ -1,37 +1,39 @@
-using System;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+namespace Enemy
 {
-    private Rigidbody2D rb;
-    private SpriteRenderer sr;
+    public class Bullet : MonoBehaviour
+    {
+        private Rigidbody2D _rb;
+        private SpriteRenderer _sr;
 
-    [SerializeField] private string playerLayerName = "Player";
-    [SerializeField] private string groundLayerName = "Ground";
+        [SerializeField] private string playerLayerName = "Player";
+        [SerializeField] private string groundLayerName = "Ground";
     
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        sr = GetComponent<SpriteRenderer>();
-    }
-
-    public void FlipSprite() => sr.flipX = !sr.flipX;
-
-    public void SetVelocity(Vector2 velocity) => rb.linearVelocity = velocity;
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer(playerLayerName))
+        private void Awake()
         {
-            other.GetComponent<Player>().Knockback(transform.position.x);
-            Destroy(gameObject);
+            _rb = GetComponent<Rigidbody2D>();
+            _sr = GetComponent<SpriteRenderer>();
         }
 
-        if (other.gameObject.layer == LayerMask.NameToLayer(groundLayerName))
-        {
-            Destroy(gameObject, .05f);
-        }
+        public void FlipSprite() => _sr.flipX = !_sr.flipX;
 
+        public void SetVelocity(Vector2 velocity) => _rb.linearVelocity = velocity;
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.gameObject.layer == LayerMask.NameToLayer(playerLayerName))
+            {
+                other.GetComponent<Player.Player>().Knockback(transform.position.x);
+                Destroy(gameObject);
+            }
+
+            if (other.gameObject.layer == LayerMask.NameToLayer(groundLayerName))
+            {
+                Destroy(gameObject, .05f);
+            }
+
+        }
     }
 }
 

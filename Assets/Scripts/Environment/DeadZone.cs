@@ -1,21 +1,25 @@
+using Managers;
 using UnityEngine;
 
-public class DeadZone : MonoBehaviour
+namespace Environment
 {
-    private void OnTriggerEnter2D(Collider2D other)
+    public class DeadZone : MonoBehaviour
     {
-        Player player = other.gameObject.GetComponent<Player>();
-        if (player != null)
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            player.Damage();
-            player.Die();
-            GameManager.Instance.RespawnPlayer();
-        }
+            Player.Player player = other.gameObject.GetComponent<Player.Player>();
+            if (player != null)
+            {
+                player.Damage();
+                player.Die();
+                GameManager.Instance.RespawnPlayer();
+            }
         
-        Enemy enemy = other.gameObject.GetComponent<Enemy>();
-        if (enemy != null)
-        {
-            enemy.Die();
+            Enemy.Enemy enemy = other.gameObject.GetComponent<Enemy.Enemy>();
+            if (enemy != null)
+            {
+                enemy.Die();
+            }
         }
     }
 }
