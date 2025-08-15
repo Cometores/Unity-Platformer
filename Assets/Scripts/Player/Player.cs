@@ -1,45 +1,54 @@
 using System.Collections;
+using Camera;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     private DifficultyType _gameDifficulty;
     private GameManager _gameManager;
-    
+
     private Rigidbody2D _rb;
     private Animator _anim;
     private CapsuleCollider2D _cd;
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed;
+
     [SerializeField] private float jumpForce;
     [SerializeField] private float doubleJumpForce;
 
     [Header("Buffer & Coyote Jump")]
     [SerializeField] private float bufferJumpWindow = .25f;
+
     private float _bufferJumpActivated = -1;
     [SerializeField] private float coyouteJumpWindow;
     private float _coyoteJumpActivated = -1;
 
     [Header("Wall interactions")]
     [SerializeField] private float wallJumpDuration = .6f;
+
     [SerializeField] private Vector2 wallJumpForce;
 
     [Header("Knockback")]
     [SerializeField] private float knockbackDuration;
+
     [SerializeField] private Vector2 knockbackPower;
 
     [Header("Collision")]
     [SerializeField] private float groundCheckDistance;
+
     [SerializeField] private float wallCheckDistance;
     [SerializeField] private LayerMask whatIsGround;
+
     [Space]
     [SerializeField] private LayerMask whatIsEnemy;
+
     [SerializeField] private Transform enemyCheck;
     [SerializeField] private float enemyCheckRadius;
 
     [Header("Player visuals")]
     [SerializeField] private AnimatorOverrideController[] animators;
+
     [SerializeField] private GameObject deathVfx;
     [SerializeField] private int skinId;
 
@@ -76,7 +85,7 @@ public class Player : MonoBehaviour
     {
         _gameManager = GameManager.Instance;
         _defaultGravityScale = _rb.gravityScale;
-        
+
         SetGameDifficulty();
         RespawnFinished(false);
         LoadSkin();
@@ -107,7 +116,7 @@ public class Player : MonoBehaviour
     private void LoadSkin()
     {
         SkinManager skinManager = SkinManager.instance;
-        
+
         if (!skinManager)
             return;
 
@@ -122,7 +131,7 @@ public class Player : MonoBehaviour
                 _gameManager.RestartLevel();
             else
                 _gameManager.RemoveFruit();
-            
+
             return;
         }
 
@@ -131,7 +140,7 @@ public class Player : MonoBehaviour
             _gameManager.RestartLevel();
         }
     }
-    
+
     private void SetGameDifficulty()
     {
         DifficultyManager difficultyManager = DifficultyManager.instance;
@@ -175,6 +184,10 @@ public class Player : MonoBehaviour
     public void Knockback(float sourceDamageXPosition)
     {
         float knockbackDir = transform.position.x < sourceDamageXPosition ? -1 : 1;
+
+        if (_isKnocked) return;
+
+        CameraManager.Instance.CameraShake(knockbackDir);
 
         StartCoroutine(KnockbackRoutine());
         _rb.linearVelocity = new Vector2(knockbackPower.x * knockbackDir, knockbackPower.y);
