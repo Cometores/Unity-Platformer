@@ -44,6 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c6e1dd53fcc45641b1afcda43d8dcca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fruitsCollected: 0
-  fruitsAreRandom: 0
+  fruitsAreRandom: 1
   totalFruits: 0
+  fruitsCollected: 0

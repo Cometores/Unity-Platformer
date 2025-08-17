@@ -52,18 +52,19 @@ namespace Enemy
 
         protected virtual void Start()
         {
-            InvokeRepeating(nameof(UpdatePlayersRef), 0, 1);
-
             if (Sr.flipX == true && !FacingRight)
             {
                 Sr.flipX = false;
                 Flip();
             }
+
+            UpdatePlayerReference();
+            PlayerManager.OnPlayerRespawn += UpdatePlayerReference;
         }
 
-        private void UpdatePlayersRef()
+        private void UpdatePlayerReference()
         {
-            if (Player == null)
+            if (!Player)
                 Player = PlayerManager.Instance.player.transform;
         }
 
@@ -80,10 +81,8 @@ namespace Enemy
 
         public virtual void Die()
         {
-            foreach (var col in Colliders)
-            {
+            foreach (var col in Colliders) 
                 col.enabled = false;
-            }
 
             Anim.SetTrigger(Hit);
             Rb.linearVelocityY = deathImpactSpeed;
@@ -92,6 +91,7 @@ namespace Enemy
             if (Random.Range(0, 100) < 50)
                 DeathRotationDirection *= -1;
         
+            PlayerManager.OnPlayerRespawn -= UpdatePlayerReference;
             Destroy(gameObject, 10);
         }
 

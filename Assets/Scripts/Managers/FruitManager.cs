@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using UI;
 using UnityEngine;
 
@@ -8,9 +9,12 @@ namespace Managers
         public static FruitManager Instance;
         
         [Header("Fruits Management")]
-        public int fruitsCollected;
         public bool fruitsAreRandom;
+        
+        [ReadOnly, ShowIf(nameof(IsPlaying))]
         public int totalFruits;
+        [ReadOnly, ShowIf(nameof(IsPlaying))]
+        public int fruitsCollected;
         
         private void Awake()
         {
@@ -19,6 +23,7 @@ namespace Managers
             else
                 Destroy(gameObject);
         }
+        private bool IsPlaying() => Application.isPlaying;
         
         public void AddFruit()
         {
@@ -57,5 +62,21 @@ namespace Managers
             int totalFruitsInBank = PlayerPrefs.GetInt("TotalFruitsAmount");
             PlayerPrefs.SetInt("TotalFruitsAmount", totalFruitsInBank + fruitsCollected);
         }
+
+        #region DebugTools
+        
+#if UNITY_EDITOR
+
+        [Button]
+        private void ParentAllFruits()
+        {
+            Fruit[] allFruits = FindObjectsByType<Fruit>(FindObjectsSortMode.None);
+            
+            foreach (Fruit fruit in allFruits)
+                fruit.transform.SetParent(transform);
+        }
+#endif
+        
+        #endregion
     }
 }

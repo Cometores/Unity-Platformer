@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
 
@@ -8,22 +9,27 @@ namespace Enemy
         [Header("Rino details")]
         [SerializeField] private float maxSpeed;
         [SerializeField] private float speedUpRate = .6f;
-        private float _defaultSpeed;
         [SerializeField] private Vector2 impactPower;
+
+        [Header("Effects")]
+        [SerializeField] private Vector2 cameraShakeImpuls;
+
+        private CinemachineImpulseSource _impulseSource;
+        private float _defaultSpeed;
         private static readonly int HitWall = Animator.StringToHash("hitWall");
 
         protected override void Start()
         {
             base.Start();
-        
+
             CanMove = false;
             _defaultSpeed = moveSpeed;
+            _impulseSource = GetComponent<CinemachineImpulseSource>();
         }
 
         protected override void Update()
         {
             base.Update();
-        
             HandleCharge();
         }
 
@@ -38,7 +44,6 @@ namespace Enemy
         
             if (!IsGroundInFront)
                 TurnAround();
-        
         }
 
         private void HandleSpeedUp()
@@ -46,8 +51,14 @@ namespace Enemy
             moveSpeed += Time.deltaTime * speedUpRate;
             if (moveSpeed >= maxSpeed)
                 maxSpeed = moveSpeed;
-        
+
             Rb.linearVelocityX = moveSpeed * FacingDir;
+        }
+
+        private void ShakeCameraOnWallHit()
+        {
+            _impulseSource.DefaultVelocity = new Vector2(cameraShakeImpuls.x * FacingDir, cameraShakeImpuls.y);
+            _impulseSource.GenerateImpulse();
         }
 
         private void TurnAround()
@@ -62,6 +73,8 @@ namespace Enemy
         private void WallHit()
         {
             CanMove = false;
+            
+            ShakeCameraOnWallHit();
             moveSpeed = _defaultSpeed;
             Anim.SetBool(HitWall, true);
             Rb.linearVelocity = new Vector2(impactPower.x * -FacingDir, impactPower.y);
@@ -80,6 +93,5 @@ namespace Enemy
             if (IsPlayerDetected)
                 CanMove = true;
         }
-
     }
 }

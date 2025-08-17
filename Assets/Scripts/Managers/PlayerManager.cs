@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Environment.Checkpoint;
 using Unity.Mathematics;
@@ -7,12 +8,13 @@ namespace Managers
 {
     public class PlayerManager : MonoBehaviour
     {
+        public static event Action OnPlayerRespawn;
         public static PlayerManager Instance;
     
         [Header("Player")]
         [SerializeField] private GameObject playerPrefab;
         [SerializeField] private Transform respawnPoint;
-        [SerializeField] private float respawnDelay;
+        [SerializeField] private float respawnDelay = 1.5f;
         public Player.Player player;
 
         private void Awake()
@@ -32,13 +34,7 @@ namespace Managers
                 player = FindFirstObjectByType<Player.Player>();
         }
         
-        private IEnumerator RespawnCoroutine()
-        {
-            yield return new WaitForSeconds(respawnDelay);
-        
-            GameObject newPlayer = Instantiate(playerPrefab, respawnPoint.position, quaternion.identity);
-            player = newPlayer.GetComponent<Player.Player>();
-        }
+        #region Player respawn logic
         
         public void RespawnPlayer()
         {
@@ -49,6 +45,18 @@ namespace Managers
             StartCoroutine(RespawnCoroutine());
         }
         
+        private IEnumerator RespawnCoroutine()
+        {
+            yield return new WaitForSeconds(respawnDelay);
+        
+            GameObject newPlayer = Instantiate(playerPrefab, respawnPoint.position, quaternion.identity);
+            player = newPlayer.GetComponent<Player.Player>();
+            
+            OnPlayerRespawn?.Invoke();
+        }
+        
         public void UpdateRespawnPoint(Transform newRespawnPoint) => respawnPoint = newRespawnPoint;
+        
+        #endregion
     }
 }

@@ -40,7 +40,7 @@ public class Fruit : MonoBehaviour
 
     private void SetRandomLookIfNeeded()
     {
-        if (FruitManager.Instance.FruitsHaveRandomLook() == false)
+        if (!FruitManager.Instance.FruitsHaveRandomLook())
         {
             UpdateFruitVisuals();
             return;
