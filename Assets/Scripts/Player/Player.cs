@@ -1,12 +1,13 @@
 using System.Collections;
 using Managers;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Player
 {
     public class Player : MonoBehaviour
     {
+        public PlayerInput PlayerInput {get; private set; }
+        
         [SerializeField] private DifficultyType gameDifficulty;
         private GameManager _gameManager;
 
@@ -16,45 +17,40 @@ namespace Player
 
         [Header("Movement")]
         [SerializeField] private float moveSpeed;
-
         [SerializeField] private float jumpForce;
         [SerializeField] private float doubleJumpForce;
 
         [Header("Buffer & Coyote Jump")]
         [SerializeField] private float bufferJumpWindow = .25f;
-
-        private float _bufferJumpActivated = -1;
         [SerializeField] private float coyouteJumpWindow;
+        private float _bufferJumpActivated = -1;
         private float _coyoteJumpActivated = -1;
 
         [Header("Wall interactions")]
         [SerializeField] private float wallJumpDuration = .6f;
-
         [SerializeField] private Vector2 wallJumpForce;
 
         [Header("Knockback")]
         [SerializeField] private float knockbackDuration;
-
         [SerializeField] private Vector2 knockbackPower;
 
         [Header("Collision")]
         [SerializeField] private float groundCheckDistance;
-
         [SerializeField] private float wallCheckDistance;
         [SerializeField] private LayerMask whatIsGround;
 
         [Space]
         [SerializeField] private LayerMask whatIsEnemy;
-
         [SerializeField] private Transform enemyCheck;
         [SerializeField] private float enemyCheckRadius;
 
         [Header("Player visuals")]
         [SerializeField] private AnimatorOverrideController[] animators;
-
         [SerializeField] private GameObject deathVfx;
         [SerializeField] private int skinId;
 
+        private Vector2 _moveInput;
+        
         private bool _isFacingRight = true;
         private bool _isGrounded;
         private bool _isAirborne;
@@ -63,9 +59,6 @@ namespace Player
         private bool _isWallJumping;
         private bool _isKnocked;
         private bool _canBeControlled = false;
-
-        private float _xInput;
-        private float _yInput;
 
         private float _defaultGravityScale;
 
@@ -82,6 +75,25 @@ namespace Player
             _rb = GetComponent<Rigidbody2D>();
             _cd = GetComponent<CapsuleCollider2D>();
             _anim = GetComponentInChildren<Animator>();
+
+            PlayerInput = new PlayerInput();
+        }
+
+        private void OnEnable()
+        {
+            PlayerInput.Enable();
+            PlayerInput.Player.Jump.performed += OnJumpPerformed;
+            PlayerInput.Player.Movement.performed += OnMovementPerformed;
+            PlayerInput.Player.Movement.canceled += OnMovementCanceled;
+        }
+
+        private void OnDisable()
+        {
+            PlayerInput.Player.Jump.performed -= OnJumpPerformed;
+            PlayerInput.Player.Movement.performed -= OnMovementPerformed;
+            PlayerInput.Player.Movement.canceled -= OnMovementCanceled;
+            
+            PlayerInput.Disable();
         }
 
         private void Start()
@@ -109,7 +121,6 @@ namespace Player
 
             HandleEnemyDetection();
             HandleWallSlide();
-            HandleInput();
             HandleMovement();
             HandleFlip();
             HandleCollision();
@@ -242,7 +253,7 @@ namespace Player
             bool canWallSlide = _isWallDetected && _rb.linearVelocityY < 0;
             if (!canWallSlide) return;
 
-            float yModifier = _yInput < 0 ? 1 : .05f;
+            float yModifier = _moveInput.y < 0 ? 1 : .05f;
             _rb.linearVelocityY *= yModifier;
         }
 
@@ -275,18 +286,6 @@ namespace Player
             AttemptBufferJump();
         }
 
-        private void HandleInput()
-        {
-            _xInput = Input.GetAxisRaw("Horizontal");
-            _yInput = Input.GetAxisRaw("Vertical");
-
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                JumpButton();
-                RequestBufferJump();
-            }
-        }
-
         private void HandleCollision()
         {
             _isGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, whatIsGround);
@@ -302,11 +301,25 @@ namespace Player
             if (_isWallJumping)
                 return;
 
-            _rb.linearVelocityX = _xInput * moveSpeed;
+            _rb.linearVelocityX = _moveInput.x * moveSpeed;
+        }
+        
+        private void OnMovementPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+        {
+            _moveInput = ctx.ReadValue<Vector2>();
+        }
+
+        private void OnMovementCanceled(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+        {
+            _moveInput = Vector2.zero;
         }
 
         #region Jump
 
+        private void OnJumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+        {
+            JumpButton();
+        }
         private void JumpButton()
         {
             bool coyoteJumpAvalible = Time.time < _coyoteJumpActivated + coyouteJumpWindow;
@@ -393,7 +406,7 @@ namespace Player
 
         private void HandleFlip()
         {
-            if (_xInput < 0 && _isFacingRight || _xInput > 0 && !_isFacingRight)
+            if (_moveInput.x < 0 && _isFacingRight || _moveInput.x > 0 && !_isFacingRight)
                 FLip();
         }
 

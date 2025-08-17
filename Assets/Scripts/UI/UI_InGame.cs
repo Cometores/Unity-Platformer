@@ -1,3 +1,4 @@
+using Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,8 +11,9 @@ namespace UI
     
         [SerializeField] private TextMeshProUGUI timerText;
         [SerializeField] private TextMeshProUGUI fruitsText;
-
         [SerializeField] private GameObject pauseUI;
+        
+        private PlayerInput _playerInput;
         private bool _isPaused;
     
         private void Awake()
@@ -20,6 +22,20 @@ namespace UI
                 Instance = this;
             else
                 Destroy(gameObject);
+
+            _playerInput = new PlayerInput();
+        }
+
+        private void OnEnable()
+        {
+            _playerInput.Enable();
+            _playerInput.UI.Pause.performed += ctx => PauseButton();
+        }
+
+        private void OnDisable()
+        {
+            _playerInput.UI.Pause.performed -= ctx => PauseButton();
+            _playerInput.Disable();
         }
 
         private void Update()
@@ -31,17 +47,25 @@ namespace UI
         public void PauseButton()
         {
             if (_isPaused)
-            {
-                _isPaused = false;
-                Time.timeScale = 1f;
-                pauseUI.SetActive(false);
-            }
+                ResumeGame();
             else
-            {
-                _isPaused = true;
-                Time.timeScale = 0;
-                pauseUI.SetActive(true);
-            }
+                PauseGame();
+        }
+
+        private void PauseGame()
+        {
+            PlayerManager.Instance.player.PlayerInput.Disable();
+            _isPaused = true;
+            Time.timeScale = 0;
+            pauseUI.SetActive(true);
+        }
+
+        private void ResumeGame()
+        {
+            PlayerManager.Instance.player.PlayerInput.Enable();
+            _isPaused = false;
+            Time.timeScale = 1f;
+            pauseUI.SetActive(false);
         }
 
         public void GoToMainMenuButton()

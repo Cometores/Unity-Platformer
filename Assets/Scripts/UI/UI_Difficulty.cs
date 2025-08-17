@@ -1,11 +1,19 @@
+using System;
 using Managers;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace UI
 {
     public class UI_Difficulty : MonoBehaviour
     {
+        [SerializeField] private GameObject firstSelected;
         private DifficultyManager _difficultyManager;
+
+        private void OnEnable()
+        {
+            EventSystem.current.SetSelectedGameObject(firstSelected);
+        }
 
         private void Start()
         {
