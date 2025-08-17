@@ -7,18 +7,27 @@ namespace Environment
     {
         private void OnTriggerEnter2D(Collider2D other)
         {
+            TryKillPlayer(other);
+            TryKillEnemy(other);
+        }
+
+        private static void TryKillEnemy(Collider2D other)
+        {
+            Enemy.Enemy enemy = other.gameObject.GetComponent<Enemy.Enemy>();
+            if (enemy)
+            {
+                enemy.Die();
+            }
+        }
+
+        private static void TryKillPlayer(Collider2D other)
+        {
             Player.Player player = other.gameObject.GetComponent<Player.Player>();
-            if (player != null)
+            if (player)
             {
                 player.Damage();
                 player.Die();
-                GameManager.Instance.RespawnPlayer();
-            }
-        
-            Enemy.Enemy enemy = other.gameObject.GetComponent<Enemy.Enemy>();
-            if (enemy != null)
-            {
-                enemy.Die();
+                PlayerManager.Instance.RespawnPlayer();
             }
         }
     }

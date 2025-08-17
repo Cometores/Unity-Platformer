@@ -4,9 +4,9 @@ using UnityEngine.SceneManagement;
 
 namespace UI
 {
-    public class UI_InGame : MonoBehaviour
+    public class UIInGame : MonoBehaviour
     {
-        public static UI_InGame instance;
+        public static UIInGame Instance;
     
         [SerializeField] private TextMeshProUGUI timerText;
         [SerializeField] private TextMeshProUGUI fruitsText;
@@ -16,7 +16,10 @@ namespace UI
     
         private void Awake()
         {
-            instance = this;
+            if (Instance == null)
+                Instance = this;
+            else
+                Destroy(gameObject);
         }
 
         private void Update()

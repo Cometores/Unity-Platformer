@@ -9,7 +9,7 @@ namespace UI
 
         private void Start()
         {
-            _difficultyManager = DifficultyManager.instance;
+            _difficultyManager = DifficultyManager.Instance;
         }
 
         public void SetEasyMode() => _difficultyManager.SetDifficulty(DifficultyType.Easy);

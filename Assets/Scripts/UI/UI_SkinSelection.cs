@@ -47,7 +47,7 @@ namespace UI
             if (skins[_skinIndex].unlocked == false)
                 BuySkin(_skinIndex);
             else
-                SkinManager.instance.ChosenSkinId = _skinIndex;
+                SkinManager.Instance.ChosenSkinId = _skinIndex;
         
             UpdateSkinDisplay();
         }

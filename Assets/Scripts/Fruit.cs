@@ -40,7 +40,7 @@ public class Fruit : MonoBehaviour
 
     private void SetRandomLookIfNeeded()
     {
-        if (_gameManager.FruitsHaveRandomLook() == false)
+        if (FruitManager.Instance.FruitsHaveRandomLook() == false)
         {
             UpdateFruitVisuals();
             return;
@@ -56,7 +56,7 @@ public class Fruit : MonoBehaviour
 
         if (player)
         {
-            _gameManager.AddFruit();
+            FruitManager.Instance.AddFruit();
             AudioManager.Instance.PlaySfx(8);
             Destroy(gameObject);
 

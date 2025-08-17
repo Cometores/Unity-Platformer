@@ -64,7 +64,7 @@ namespace Enemy
         private void UpdatePlayersRef()
         {
             if (Player == null)
-                Player = GameManager.Instance.player.transform;
+                Player = PlayerManager.Instance.player.transform;
         }
 
         protected virtual void Update()

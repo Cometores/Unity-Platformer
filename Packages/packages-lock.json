@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.bgtools.playerprefseditor": {
+      "version": "https://github.com/Dysman/bgTools-playerPrefsEditor.git#upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "e98cb18702ec61457b051aad8a1862eab4f70b4e"
+    },
     "com.singularitygroup.hotreload": {
       "version": "file:com.singularitygroup.hotreload",
       "depth": 0,

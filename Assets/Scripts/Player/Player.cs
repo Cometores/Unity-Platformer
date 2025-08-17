@@ -1,12 +1,13 @@
 using System.Collections;
 using Managers;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Player
 {
     public class Player : MonoBehaviour
     {
-        private DifficultyType _gameDifficulty;
+        [SerializeField] private DifficultyType gameDifficulty;
         private GameManager _gameManager;
 
         private Rigidbody2D _rb;
@@ -117,7 +118,7 @@ namespace Player
 
         private void LoadSkin()
         {
-            SkinManager skinManager = SkinManager.instance;
+            SkinManager skinManager = SkinManager.Instance;
 
             if (!skinManager)
                 return;
@@ -127,17 +128,17 @@ namespace Player
 
         public void Damage()
         {
-            if (_gameDifficulty == DifficultyType.Normal)
+            if (gameDifficulty == DifficultyType.Normal)
             {
-                if (_gameManager.FruitsCollected() <= 0)
+                if (FruitManager.Instance.FruitsCollected() <= 0)
                     _gameManager.RestartLevel();
                 else
-                    _gameManager.RemoveFruit();
+                    FruitManager.Instance.RemoveFruit();
 
                 return;
             }
 
-            if (_gameDifficulty == DifficultyType.Hard)
+            if (gameDifficulty == DifficultyType.Hard)
             {
                 _gameManager.RestartLevel();
             }
@@ -145,9 +146,9 @@ namespace Player
 
         private void SetGameDifficulty()
         {
-            DifficultyManager difficultyManager = DifficultyManager.instance;
+            DifficultyManager difficultyManager = DifficultyManager.Instance;
             if (difficultyManager != null)
-                _gameDifficulty = difficultyManager.difficulty;
+                gameDifficulty = difficultyManager.difficulty;
         }
 
         private void HandleEnemyDetection()

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8299470404373387546
+--- !u!1 &8729524184296494812
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,50 +8,40 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5576230559881514323}
-  - component: {fileID: 8465372182700920666}
+  - component: {fileID: 2726645143977366856}
+  - component: {fileID: 3555834158242150098}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: DifficultyManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5576230559881514323
+--- !u!4 &2726645143977366856
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8299470404373387546}
+  m_GameObject: {fileID: 8729524184296494812}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 455.4536, y: 611.0076, z: 4.6018786}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8465372182700920666
+--- !u!114 &3555834158242150098
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8299470404373387546}
+  m_GameObject: {fileID: 8729524184296494812}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56a7bd342cc0cf143b5458fe4f27be46, type: 3}
+  m_Script: {fileID: 11500000, guid: 9dc0c2fe7243e044e80902a7a55a6424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelTimer: 0
-  currentLevelIndex: 0
-  playerPrefab: {fileID: 228416389088342729, guid: 5abd403e6aa04d940abb8c2dbdf3d6fc, type: 3}
-  respawnPoint: {fileID: 0}
-  respawnDelay: 1.5
-  player: {fileID: 0}
-  fruitsCollected: 0
-  fruitsAreRandom: 0
-  totalFruits: 0
-  arrowPrefab: {fileID: 4699448997897101040, guid: 022ff7900bdac6742aa0af0dea3c27ae, type: 3}
-  audioManager: {fileID: 2756446265793229378, guid: ebb285ccb3d98fe48aca709f1e81cfb1, type: 3}
+  difficulty: 0

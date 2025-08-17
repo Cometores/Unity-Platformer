@@ -11,15 +11,14 @@ namespace Managers
 
     public class DifficultyManager : MonoBehaviour
     {
-        public static DifficultyManager instance;
-
+        public static DifficultyManager Instance;
         public DifficultyType difficulty;
 
         private void Awake()
         {
-            DontDestroyOnLoad(this.gameObject);
-            if (instance == null)
-                instance = this;
+            DontDestroyOnLoad(gameObject);
+            if (!Instance)
+                Instance = this;
             else
                 Destroy(gameObject);
         }
