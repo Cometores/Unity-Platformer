@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace UI
 {
-    public class UI_DifficultyInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class UI_DifficultyInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
     {
         [SerializeField] private TextMeshProUGUI difficultyInfo;
     
@@ -13,10 +13,20 @@ namespace UI
     
         public void OnPointerEnter(PointerEventData eventData)
         {
-            difficultyInfo.text = description;
+            EventSystem.current?.SetSelectedGameObject(gameObject);
         }
 
         public void OnPointerExit(PointerEventData eventData)
+        {
+            EventSystem.current?.SetSelectedGameObject(null);
+        }
+
+        public void OnSelect(BaseEventData eventData)
+        {
+            difficultyInfo.text = description;
+        }
+
+        public void OnDeselect(BaseEventData eventData)
         {
             difficultyInfo.text = "";
         }
