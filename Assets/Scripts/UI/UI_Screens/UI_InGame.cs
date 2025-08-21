@@ -38,12 +38,6 @@ namespace UI
             _playerInput.Disable();
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
-                PauseButton();
-        }
-
         public void PauseButton()
         {
             if (_isPaused)
