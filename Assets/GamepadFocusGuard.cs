@@ -16,17 +16,16 @@ public class GamepadFocusGuard : MonoBehaviour
     private void OnEnable()
     {
         _input.Enable();
-        _input.UI.Navigate.performed += OnNavigateStarted;
-        EnsureSelection();
+        _input.UI.Navigate.performed += OnNavigatePerformed;
     }
 
     private void OnDisable()
     {
-        _input.UI.Navigate.performed -= OnNavigateStarted;
+        _input.UI.Navigate.performed -= OnNavigatePerformed;
         _input.Disable();
     }
 
-    private void OnNavigateStarted(InputAction.CallbackContext ctx)
+    private void OnNavigatePerformed(InputAction.CallbackContext ctx)
     {
         if (EventSystem.current == null || EventSystem.current.currentSelectedGameObject != null)
             return;
@@ -36,9 +35,8 @@ public class GamepadFocusGuard : MonoBehaviour
 
     private void EnsureSelection()
     {
-        if (EventSystem.current == null || fallbackSelected == null) return;
+        if (fallbackSelected == null) return;
 
-        EventSystem.current.SetSelectedGameObject(null);
         fallbackSelected.Select();
     }
 }

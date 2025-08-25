@@ -58,8 +58,8 @@ namespace Enemy
                 Flip();
             }
 
-            UpdatePlayerReference();
             PlayerManager.OnPlayerRespawn += UpdatePlayerReference;
+            UpdatePlayerReference();
         }
 
         private void UpdatePlayerReference()

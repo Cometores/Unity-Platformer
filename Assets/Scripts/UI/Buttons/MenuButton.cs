@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+#pragma warning disable CS0414 // Field is assigned but its value is never used
+
 namespace UI.Buttons
 {
     [RequireComponent(typeof(Animator), typeof(Button))]
