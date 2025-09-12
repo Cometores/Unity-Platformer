@@ -1,5 +1,4 @@
-﻿using FlappyBird.UI.Buttons;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace UI.Buttons
 {

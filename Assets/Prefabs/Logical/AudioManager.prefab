@@ -450,6 +450,7 @@ MonoBehaviour:
   bgm:
   - {fileID: 4301273923796060636}
   - {fileID: 6654304474173819896}
+  audioMixer: {fileID: 24100000, guid: d847d24a3ae43884e97231dfb8b7f0cc, type: 2}
 --- !u!1 &4328752171183891666
 GameObject:
   m_ObjectHideFlags: 0
