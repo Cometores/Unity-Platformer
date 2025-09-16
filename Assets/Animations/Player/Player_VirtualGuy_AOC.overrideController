@@ -6,6 +6,6 @@ AnimatorOverrideController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Player_VirtualGuy
+  m_Name: Player_VirtualGuy_AOC
   m_Controller: {fileID: 9100000, guid: c8652be0286b60b49bca30291561087c, type: 2}
   m_Clips: []

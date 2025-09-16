@@ -1,8 +1,8 @@
-using UI.UI_Screens;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-namespace UI
+namespace UI.UI_Screens
 {
     public class UI_LevelSelection : MonoBehaviour
     {
@@ -12,13 +12,20 @@ namespace UI
         [SerializeField] private bool[] levelsUnlocked;
     
         private int _levelsAmount;
-
-        private void Start()
+        
+        private void Awake()
         {
             _levelsAmount = SceneManager.sceneCountInBuildSettings - 1; // -1 for MainMenu
 
             LoadLevelsInfo();
             CreateLevelButtons();
+        }
+        
+        private void OnEnable()
+        {
+            GameObject firstLevelButton = buttonsParent.GetChild(0).gameObject;
+            if(firstLevelButton)
+                EventSystem.current.SetSelectedGameObject(firstLevelButton);
         }
 
         private void LoadLevelsInfo()

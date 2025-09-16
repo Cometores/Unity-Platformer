@@ -1,6 +1,8 @@
+using System;
 using Managers;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace UI.UI_Screens
 {
@@ -23,6 +25,43 @@ namespace UI.UI_Screens
         [SerializeField] private TextMeshProUGUI priceText;
         [SerializeField] private TextMeshProUGUI bankText;
         [SerializeField] private TextMeshProUGUI selectBtnText;
+
+        private DefaultInputActions _defaultInput;
+
+        private float _inputCooldown = .3f;
+        private float _lastTimeInput;
+
+        private void Awake()
+        {
+            _defaultInput = new DefaultInputActions();
+        }
+
+        private Action<InputAction.CallbackContext> NavigateOnperformed()
+        {
+            return ctx =>
+            {
+                if (Time.time - _lastTimeInput < _inputCooldown)
+                    return;
+                
+                if(ctx.ReadValue<Vector2>().x <= -1)
+                    PreviousSkin();
+                else if (ctx.ReadValue<Vector2>().x >= 1)
+                    NextSkin();
+            };
+        }
+
+        private void OnEnable()
+        {
+            _defaultInput.Enable();
+            _defaultInput.UI.Navigate.performed += NavigateOnperformed();
+        }
+        
+
+        private void OnDisable()
+        {
+            _defaultInput.UI.Navigate.performed += NavigateOnperformed();
+            _defaultInput.Disable();
+        }
 
         private void Start()
         {
@@ -54,12 +93,16 @@ namespace UI.UI_Screens
 
         public void NextSkin()
         {
+            _lastTimeInput = Time.time;
+            
             _skinIndex = (_skinIndex + 1) % skinAnimator.layerCount;
             UpdateSkinDisplay();
         }
 
         public void PreviousSkin()
         {
+            _lastTimeInput = Time.time;
+            
             _skinIndex--;
             if (_skinIndex < 0)
             {
