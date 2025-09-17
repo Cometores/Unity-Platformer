@@ -6,7 +6,7 @@ namespace Enemy
 {
     public class Enemy : MonoBehaviour
     {
-        private SpriteRenderer Sr => GetComponent<SpriteRenderer>();
+        protected SpriteRenderer Sr => GetComponent<SpriteRenderer>();
         protected Transform Player;
         protected Animator Anim;
         protected Rigidbody2D Rb;
@@ -81,11 +81,10 @@ namespace Enemy
 
         public virtual void Die()
         {
-            if (Rb.isKinematic)
-                Rb.isKinematic = false;
+            if (Rb.bodyType == RigidbodyType2D.Kinematic)
+                Rb.bodyType = RigidbodyType2D.Dynamic;
             
-            foreach (var col in Colliders) 
-                col.enabled = false;
+            EnableColliders(false);
 
             Anim.SetTrigger(Hit);
             Rb.linearVelocityY = deathImpactSpeed;
@@ -96,6 +95,12 @@ namespace Enemy
         
             PlayerManager.OnPlayerRespawn -= UpdatePlayerReference;
             Destroy(gameObject, 10);
+        }
+
+        protected void EnableColliders(bool isEnabled)
+        {
+            foreach (var col in Colliders) 
+                col.enabled = isEnabled;
         }
 
         private void HandleDeathRotation()
