@@ -81,6 +81,9 @@ namespace Enemy
 
         public virtual void Die()
         {
+            if (Rb.isKinematic)
+                Rb.isKinematic = false;
+            
             foreach (var col in Colliders) 
                 col.enabled = false;
 
