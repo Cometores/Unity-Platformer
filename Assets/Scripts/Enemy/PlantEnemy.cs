@@ -40,10 +40,5 @@ namespace Enemy
         
             Destroy(newBullet.gameObject, 10);
         }
-
-        protected override void HandleAnimator()
-        {
-            // empty because of the velocity
-        }
     }
 }
