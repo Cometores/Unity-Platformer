@@ -38,7 +38,7 @@ namespace Game._Scripts.Environment.Traps
             SetupWayPoints();
             float randomDelay = Random.Range(0, .6f);
         
-            yield return new WaitForSeconds(randomDelay);
+            yield return Helpers.GetWait(randomDelay);
         
             _canMove = true;
         }

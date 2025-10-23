@@ -66,7 +66,7 @@ namespace Game._Scripts.Managers
         {
             Vector3 newPosition = target.position;
         
-            yield return new WaitForSeconds(delay);
+            yield return Helpers.GetWait(delay);
 
             GameObject newObject = Instantiate(prefab, newPosition, Quaternion.identity);
         }

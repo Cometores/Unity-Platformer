@@ -81,7 +81,7 @@ namespace Game._Scripts.Environment.Traps
         {
             _canMove = false;
 
-            yield return new WaitForSeconds(delay);
+            yield return Helpers.GetWait(delay);
 
             _canMove = true;
             _sr.flipX = !_sr.flipX;

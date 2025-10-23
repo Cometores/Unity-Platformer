@@ -47,7 +47,7 @@ namespace Game._Scripts.Managers
         
         private IEnumerator RespawnCoroutine()
         {
-            yield return new WaitForSeconds(respawnDelay);
+            yield return Helpers.GetWait(respawnDelay);
         
             GameObject newPlayer = Instantiate(playerPrefab, respawnPoint.position, quaternion.identity);
             player = newPlayer.GetComponent<Player.Player>();

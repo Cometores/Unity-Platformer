@@ -40,7 +40,7 @@ namespace Game._Scripts.Environment.Traps
         {
             SetFire(false);
         
-            yield return new WaitForSeconds(offDuration);
+            yield return Helpers.GetWait(offDuration);
         
             SetFire(true);
         }

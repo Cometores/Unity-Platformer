@@ -232,7 +232,7 @@ namespace Game._Scripts.Player
             _rb.linearVelocity = Vector2.zero;
             _rb.AddForce(direction, ForceMode2D.Impulse);
 
-            yield return new WaitForSeconds(duration);
+            yield return Helpers.GetWait(duration);
 
             _canBeControlled = true;
         }
@@ -242,7 +242,7 @@ namespace Game._Scripts.Player
             _isKnocked = true;
             _anim.SetBool(IsKnocked, true);
 
-            yield return new WaitForSeconds(knockbackDuration);
+            yield return Helpers.GetWait(knockbackDuration);
 
             _isKnocked = false;
             _anim.SetBool(IsKnocked, false);
@@ -371,7 +371,7 @@ namespace Game._Scripts.Player
         private IEnumerator WallJumpRoutine()
         {
             _isWallJumping = true;
-            yield return new WaitForSeconds(wallJumpDuration);
+            yield return Helpers.GetWait(wallJumpDuration);
             _isWallJumping = false;
         }
 
