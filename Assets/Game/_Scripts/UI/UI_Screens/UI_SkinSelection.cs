@@ -86,7 +86,7 @@ namespace Game._Scripts.UI.UI_Screens
             if (skins[_skinIndex].unlocked == false)
                 BuySkin(_skinIndex);
             else
-                SkinManager.Instance.ChosenSkinId = _skinIndex;
+                SkinManager.Instance.SetSkin(_skinIndex);
         
             UpdateSkinDisplay();
         }

@@ -26,13 +26,13 @@ namespace Game._Scripts.UI.Buttons
         private void OnEnable()
         {
             if (AudioManager.Instance != null)
-                AudioManager.Instance.volumeChanged += OnVolumeChanged;
+                AudioManager.Instance.VolumeChanged += OnVolumeChanged;
         }
 
         private void OnDisable()
         {
             if (AudioManager.Instance != null)
-                AudioManager.Instance.volumeChanged -= OnVolumeChanged;
+                AudioManager.Instance.VolumeChanged -= OnVolumeChanged;
         }
 
         public void OnPointerDown(PointerEventData eventData)

@@ -9,6 +9,10 @@ namespace Game._Scripts.Managers
         Hard
     }
 
+    /// <summary>
+    /// Manages gameplay difficulty settings and provides access to the current difficulty level.
+    /// It allows changing the difficulty level and persists the chosen setting using PlayerPrefs.
+    /// </summary>
     public class DifficultyManager : MonoBehaviour
     {
         public static DifficultyManager Instance;
@@ -16,13 +20,23 @@ namespace Game._Scripts.Managers
 
         private void Awake()
         {
-            DontDestroyOnLoad(gameObject);
             if (!Instance)
                 Instance = this;
             else
                 Destroy(gameObject);
+            
+            LoadDifficulty();
         }
 
-        public void SetDifficulty(DifficultyType newDifficulty) => difficulty = newDifficulty;
+        private void LoadDifficulty()
+        {
+            difficulty = SaveSystem.GetDifficulty();
+        }
+        
+        public void SetDifficulty(DifficultyType newDifficulty)
+        {
+            difficulty = newDifficulty;
+            SaveSystem.SetDifficulty((int)difficulty);
+        }
     }
 }

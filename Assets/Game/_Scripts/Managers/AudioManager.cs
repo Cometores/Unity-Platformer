@@ -9,7 +9,7 @@ namespace Game._Scripts.Managers
     public class AudioManager : MonoBehaviour
     {
         public static AudioManager Instance;
-        public EventHandler<VolumeChangedEventArgs> volumeChanged;
+        public EventHandler<VolumeChangedEventArgs> VolumeChanged;
 
         [Header("Audio Source")]
         [SerializeField] private AudioSource[] sfx;
@@ -24,8 +24,6 @@ namespace Game._Scripts.Managers
 
         private void Awake()
         {
-            DontDestroyOnLoad(gameObject);
-
             if (!Instance)
                 Instance = this;
             else
@@ -135,7 +133,7 @@ namespace Game._Scripts.Managers
 
         private void RaiseVolumeChangedEvent(float oldVolume, float newVolume, string mixerName)
         {
-            volumeChanged?.Invoke(this, new VolumeChangedEventArgs(oldVolume, newVolume, mixerName));
+            VolumeChanged?.Invoke(this, new VolumeChangedEventArgs(oldVolume, newVolume, mixerName));
         }
     }
 

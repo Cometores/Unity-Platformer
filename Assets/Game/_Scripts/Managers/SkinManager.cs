@@ -9,12 +9,23 @@ namespace Game._Scripts.Managers
 
         private void Awake()
         {
-            DontDestroyOnLoad(gameObject);
-
             if (Instance == null)
                 Instance = this;
             else
                 Destroy(gameObject);
+            
+            GetSkin();
+        }
+        
+        private void GetSkin()
+        {
+            ChosenSkinId = SaveSystem.GetSkin();
+        }
+        
+        public void SetSkin(int skinId)
+        {
+            ChosenSkinId = skinId;
+            SaveSystem.SetSkin(skinId);
         }
     }
 }

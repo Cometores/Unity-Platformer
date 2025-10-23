@@ -45,9 +45,6 @@ namespace Game._Scripts.UI.UI_Screens
         public void ContinueGame()
         {
             int levelToLoad = PlayerPrefs.GetInt("ContinueLevelNumber", 0);
-            int difficulty = PlayerPrefs.GetInt("Difficulty", 0);
-            int skin = PlayerPrefs.GetInt("Skin");
-            
             SceneManager.LoadScene($"Level_{levelToLoad}");
         }
     }

@@ -28,7 +28,7 @@ namespace Game._Scripts.UI.Buttons
                 ? normalSprite 
                 : mutedSprite;
             
-            AudioManager.Instance.volumeChanged += OnVolumeChanged;
+            AudioManager.Instance.VolumeChanged += OnVolumeChanged;
         }
 
         private void OnDisable()
@@ -38,7 +38,7 @@ namespace Game._Scripts.UI.Buttons
 
         private void OnDestroy()
         {
-            AudioManager.Instance.volumeChanged -= OnVolumeChanged;
+            AudioManager.Instance.VolumeChanged -= OnVolumeChanged;
         }
         
         private void OnVolumeChanged(object sender, VolumeChangedEventArgs e)
