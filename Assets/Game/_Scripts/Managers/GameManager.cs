@@ -73,7 +73,7 @@ namespace Game._Scripts.Managers
 
         public void RestartLevel()
         {
-            SceneManager.LoadScene($"Level_{currentLevelIndex}");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     
         public void LoadNextLevel()
