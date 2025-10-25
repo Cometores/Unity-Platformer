@@ -93,11 +93,6 @@ namespace Game._Scripts.Enemy
             };
         }
 
-        protected override void HandleAnimator()
-        {
-            // empty because of the velocity
-        }
-
         protected void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.chartreuse;

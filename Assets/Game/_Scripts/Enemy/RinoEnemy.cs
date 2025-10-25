@@ -17,6 +17,7 @@ namespace Game._Scripts.Enemy
         private CinemachineImpulseSource _impulseSource;
         private float _defaultSpeed;
         private static readonly int HitWall = Animator.StringToHash("hitWall");
+        private static readonly int XVelocity = Animator.StringToHash("xVelocity");
 
         protected override void Start()
         {
@@ -29,6 +30,7 @@ namespace Game._Scripts.Enemy
 
         protected override void Update()
         {
+            HandleAnimator();
             base.Update();
             HandleCharge();
         }
@@ -44,6 +46,11 @@ namespace Game._Scripts.Enemy
         
             if (!IsGroundInFront)
                 TurnAround();
+        }
+        
+        protected virtual void HandleAnimator()
+        {
+            Anim.SetFloat(XVelocity, Rb.linearVelocityX);
         }
 
         private void HandleSpeedUp()

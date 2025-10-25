@@ -9,9 +9,12 @@ namespace Game._Scripts.Enemy
         [SerializeField] private float maxSpeed = 10;
         private bool _hasBody = true;
         private static readonly int WallHit = Animator.StringToHash("wallHit");
+        private static readonly int XVelocity = Animator.StringToHash("xVelocity");
 
         protected override void Update()
         {
+            HandleAnimator();
+            
             base.Update();
 
             if (IsDead) return;
@@ -43,6 +46,11 @@ namespace Game._Scripts.Enemy
             {
                 base.Die();
             }
+        }
+        
+        protected virtual void HandleAnimator()
+        {
+            Anim.SetFloat(XVelocity, Rb.linearVelocityX);
         }
 
         private void HandleTurnAround()
@@ -80,7 +88,7 @@ namespace Game._Scripts.Enemy
             Destroy(body, 10);
         }
 
-        protected override void Flip()
+        public override void Flip()
         {
             base.Flip();
 

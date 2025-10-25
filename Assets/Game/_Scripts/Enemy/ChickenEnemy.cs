@@ -7,12 +7,16 @@ namespace Game._Scripts.Enemy
         [Header("Chicken details")]
         [SerializeField] private float aggroDuration;
         [SerializeField] private float detectionRange;
+        
+        private static readonly int XVelocity = Animator.StringToHash("xVelocity");
 
         private float _aggroTimer;
         private bool _canFlip = true;
 
         protected override void Update()
         {
+            HandleAnimator();
+            
             base.Update();
         
             if (IsDead) return;
@@ -45,6 +49,11 @@ namespace Game._Scripts.Enemy
                 Rb.linearVelocity = Vector2.zero;
             }
         }
+        
+        protected virtual void HandleAnimator()
+        {
+            Anim.SetFloat(XVelocity, Rb.linearVelocityX);
+        }
 
         private void HandleMovement()
         {
@@ -68,7 +77,7 @@ namespace Game._Scripts.Enemy
             }
         }
 
-        protected override void Flip()
+        public override void Flip()
         {
             base.Flip();
 

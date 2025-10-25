@@ -8,15 +8,16 @@ namespace Game._Scripts.Enemy
     {
         protected SpriteRenderer Sr => GetComponent<SpriteRenderer>();
         protected Transform Player;
-        protected Animator Anim;
-        protected Rigidbody2D Rb;
+        public Animator Anim;
+        public Rigidbody2D Rb;
         protected Collider2D[] Colliders;
 
         [Header("General info")]
-        [SerializeField] protected float moveSpeed = 2f;
-        [SerializeField] protected float idleDuration = 1.5f;
+        [SerializeField]
+        public float moveSpeed = 2f;
+        [SerializeField] public float idleDuration = 1.5f;
         protected bool CanMove = true;
-        protected float IdleTimer;
+        public float IdleTimer;
 
         [Header("Death details")]
         [SerializeField] protected float deathImpactSpeed = 5;
@@ -33,15 +34,14 @@ namespace Game._Scripts.Enemy
         [SerializeField] protected float playerDetectionDistance = 15;
 
         protected bool IsPlayerDetected;
-        protected bool IsGrounded;
-        protected bool IsWallDetected;
-        protected bool IsGroundInFront;
+        public bool IsGrounded;
+        public bool IsWallDetected;
+        public bool IsGroundInFront;
 
-        protected int FacingDir = -1;
+        public int FacingDir = -1;
         protected bool FacingRight = false;
     
         protected static readonly int Hit = Animator.StringToHash("hit");
-        private static readonly int XVelocity = Animator.StringToHash("xVelocity");
 
         protected virtual void Awake()
         {
@@ -71,7 +71,6 @@ namespace Game._Scripts.Enemy
         protected virtual void Update()
         {
             HandleCollision();
-            HandleAnimator();
 
             IdleTimer -= Time.deltaTime;
 
@@ -124,16 +123,11 @@ namespace Game._Scripts.Enemy
                 Flip();
         }
 
-        protected virtual void Flip()
+        public virtual void Flip()
         {
             transform.Rotate(0, 180, 0);
             FacingRight = !FacingRight;
             FacingDir *= -1;
-        }
-
-        protected virtual void HandleAnimator()
-        {
-            Anim.SetFloat(XVelocity, Rb.linearVelocityX);
         }
 
         protected virtual void OnDrawGizmos()

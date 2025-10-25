@@ -1,3 +1,4 @@
+using Game._Scripts.Enemy.Movement;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -11,11 +12,16 @@ namespace Game._Scripts.Enemy
         [SerializeField] private float attackCooldown = 1.5f;
         [SerializeField] private float bulletSpeed = 7;
     
-        private static readonly int XVelocity = Animator.StringToHash("xVelocity");
         private static readonly int Attack1 = Animator.StringToHash("attack");
-
         private float _lastTimeAttacked;
-    
+        private IMovement _groundMovement;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            _groundMovement = new GroundMovement(this);
+        }
+        
         protected override void Update()
         {
             base.Update();
@@ -27,29 +33,8 @@ namespace Game._Scripts.Enemy
             if (IsPlayerDetected && canAttack)
                 Attack();
 
-            HandleMovement();
-
-            if (IsGrounded)
-                HandleTurnAround();
-        }
-
-        private void HandleTurnAround()
-        {
-            if (!IsGroundInFront || IsWallDetected)
-            {
-                Flip();
-                IdleTimer = idleDuration;
-                Rb.linearVelocity = Vector2.zero;
-            }
-        }
-
-        private void HandleMovement()
-        {
-            if (IdleTimer > 0)
-                return;
-
-            if (IsGroundInFront)
-                Rb.linearVelocityX = moveSpeed * FacingDir;
+            if (IdleTimer < 0)
+                _groundMovement.ManageEnemyMovement();
         }
     
         private void Attack()

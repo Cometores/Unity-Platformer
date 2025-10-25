@@ -91,7 +91,7 @@ namespace Game._Scripts.Enemy
                 }
             }
         }
-
+        
         public override void Die()
         {
             base.Die();
