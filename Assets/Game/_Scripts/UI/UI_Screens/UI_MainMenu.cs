@@ -40,11 +40,11 @@ namespace Game._Scripts.UI.UI_Screens
             AudioManager.Instance.PlaySfx(4);
         }
 
-        private bool HasLevelProgression() => PlayerPrefs.GetInt("ContinueLevelNumber", 0) > 0;
+        private bool HasLevelProgression() => SaveSystem.GetContinueLevelIndexOrZero() > 0;
 
         public void ContinueGame()
         {
-            int levelToLoad = PlayerPrefs.GetInt("ContinueLevelNumber", 0);
+            int levelToLoad = SaveSystem.GetContinueLevelIndexOrZero();
             SceneManager.LoadScene($"Level_{levelToLoad}");
         }
     }

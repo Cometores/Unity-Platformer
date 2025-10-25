@@ -1,4 +1,5 @@
 using System.Collections;
+using Game._Scripts.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -83,8 +84,8 @@ namespace Game._Scripts.Managers
             if (IsFinalLevel())
                 return;
         
-            PlayerPrefs.SetInt($"Level{nextLevelIndex}Unlocked", 1);
-            PlayerPrefs.SetInt("ContinueLevelNumber", nextLevelIndex);
+            SaveSystem.UnlockLevel(nextLevelIndex);
+            SaveSystem.SetContinueLevelIndex(nextLevelIndex);
         
             TimeManager.Instance.SaveBestTimeForLevel(currentLevelIndex);
             FruitManager.Instance.SaveFruitsInfo(currentLevelIndex);

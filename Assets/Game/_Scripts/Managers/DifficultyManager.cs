@@ -11,7 +11,7 @@ namespace Game._Scripts.Managers
 
     /// <summary>
     /// Manages gameplay difficulty settings and provides access to the current difficulty level.
-    /// It allows changing the difficulty level and persists the chosen setting using PlayerPrefs.
+    /// It allows changing the difficulty level and persists the chosen setting using Save System.
     /// </summary>
     public class DifficultyManager : MonoBehaviour
     {

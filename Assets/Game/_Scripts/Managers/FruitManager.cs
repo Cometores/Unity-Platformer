@@ -49,19 +49,11 @@ namespace Game._Scripts.Managers
         
             UIInGame.Instance.UpdateFruitUI(fruitsCollected, totalFruits);
         
-            PlayerPrefs.SetInt("Level" + currentLevelIndex + "TotalFruits", totalFruits);
+            SaveSystem.SaveTotalLevelFruits(currentLevelIndex, totalFruits);
         }
-
-        public void SaveFruitsInfo(int currentLevelIndex)
-        {
-            int maxFruits = PlayerPrefs.GetInt($"Level{currentLevelIndex}FruitsCollected");
         
-            if (fruitsCollected > maxFruits)
-                PlayerPrefs.SetInt($"Level{currentLevelIndex}FruitsCollected", fruitsCollected);
-
-            int totalFruitsInBank = PlayerPrefs.GetInt("TotalFruitsAmount");
-            PlayerPrefs.SetInt("TotalFruitsAmount", totalFruitsInBank + fruitsCollected);
-        }
+        public void SaveFruitsInfo(int currentLevelIndex) => 
+            SaveSystem.SaveFruitsCollected(currentLevelIndex, fruitsCollected);
 
         #region DebugTools
         

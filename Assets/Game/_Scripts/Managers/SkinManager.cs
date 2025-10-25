@@ -19,13 +19,13 @@ namespace Game._Scripts.Managers
         
         private void GetSkin()
         {
-            ChosenSkinId = SaveSystem.GetSkin();
+            ChosenSkinId = SaveSystem.GetCurrentSkinIndex();
         }
         
         public void SetSkin(int skinId)
         {
             ChosenSkinId = skinId;
-            SaveSystem.SetSkin(skinId);
+            SaveSystem.SaveCurrentSkinIndex(skinId);
         }
     }
 }

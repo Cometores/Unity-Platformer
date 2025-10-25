@@ -19,7 +19,7 @@ namespace Game._Scripts.UI.Buttons
 
         private void Start()
         {
-            float volume = PlayerPrefs.GetFloat(mixerName, Constants.DEFAULT_VOLUME);
+            float volume = SaveSystem.GetVolume(mixerName);
             SetFillAmountSafe(volume);
         }
 
@@ -80,11 +80,5 @@ namespace Game._Scripts.UI.Buttons
             if (_fillImage != null)
                 _fillImage.fillAmount = value;
         }
-    }
-
-    internal static class Constants
-    {
-        public const float MUTE_THRESHOLD = 0.04f;
-        public const float DEFAULT_VOLUME = 0.5f;
     }
 }

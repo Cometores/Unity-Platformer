@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game._Scripts
+namespace Game._Scripts.Utils
 {
     public class Helpers
     {

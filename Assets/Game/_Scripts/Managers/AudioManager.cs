@@ -123,8 +123,7 @@ namespace Game._Scripts.Managers
         
         private void ApplyAndSaveVolume(float volume, string mixerName)
         {
-            PlayerPrefs.SetFloat($"{mixerName}", volume);
-            PlayerPrefs.Save();
+            SaveSystem.SetVolume(volume, mixerName);
 
             float db = Mathf.Lerp(-20f, 20f, volume);
             if (Mathf.Approximately(db, -20)) db = -80;

@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace Game._Scripts.UI
 {
-    public class UI_DifficultyInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
+    public class DifficultyInfoDisplayTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
     {
         [SerializeField] private TextMeshProUGUI difficultyInfo;
     

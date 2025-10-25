@@ -10,39 +10,18 @@ namespace Game._Scripts.UI.UI_Screens
         [SerializeField] private TextMeshProUGUI bestTimeText;
         [SerializeField] private TextMeshProUGUI fruitsText;
     
-        public string sceneName;
-
+        private string _sceneName;
         private int _levelIndex;
 
-        public void SetupButton(int newLevelIndex)
+        public void SetupButton(int levelIndex)
         {
-            _levelIndex = newLevelIndex;
-
-            levelNumberText.text = $"Level {newLevelIndex}";
-            sceneName = $"Level_{newLevelIndex}";
-
-            bestTimeText.text = GetBestTime();
-            fruitsText.text = GetFruits();
-
+            _levelIndex = levelIndex;
+            _sceneName = $"Level_{levelIndex}";
+            
+            levelNumberText.text = $"Level {levelIndex}";
+            bestTimeText.text = SaveSystem.GetBestTime(_levelIndex);
+            fruitsText.text = SaveSystem.GetFruitsCollectedInfo(_levelIndex);
         }
-        public void LoadLevel()
-        {
-            SceneManager.LoadScene(sceneName);
-        }
-
-        private string GetBestTime()
-        {
-            return PlayerPrefs.GetFloat($"Level{_levelIndex}BestTime", 99).ToString("00");
-        }
-
-        private string GetFruits()
-        {
-            int totalFruitsOnLevel = PlayerPrefs.GetInt("Level" + _levelIndex + "TotalFruits", 0);
-            string totalFruitsText = totalFruitsOnLevel == 0 ? "?" : totalFruitsOnLevel.ToString();
-
-            int collectedFruits = PlayerPrefs.GetInt($"Level{_levelIndex}FruitsCollected");
-
-            return $"{collectedFruits} / {totalFruitsText}";
-        }
+        public void LoadLevel() => SceneManager.LoadScene(_sceneName);
     }
 }

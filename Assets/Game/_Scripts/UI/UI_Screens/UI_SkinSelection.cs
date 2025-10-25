@@ -74,7 +74,7 @@ namespace Game._Scripts.UI.UI_Screens
             for (int i = 0; i < skins.Length; i++)
             {
                 string skinName = skins[i].skinName;
-                bool skinUnlocked = PlayerPrefs.GetInt($"{skinName}Unlocked", 0) == 1;
+                bool skinUnlocked = SaveSystem.IsSkinUnlocked(skinName);
 
                 if (skinUnlocked || i == 0)
                     skins[i].unlocked = true;
@@ -152,16 +152,16 @@ namespace Game._Scripts.UI.UI_Screens
             string skinName = skins[index].skinName;
             skins[index].unlocked = true;
 
-            PlayerPrefs.SetInt($"{skinName}Unlocked", 1);
+            SaveSystem.UnlockSkin(skinName);
         }
 
-        private int FruitsInBank() => PlayerPrefs.GetInt("TotalFruitsAmount");
+        private int FruitsInBank() => SaveSystem.GetFruitsInBank();
 
         private bool HaveEnoughFruits(int price)
         {
             if (FruitsInBank() >= price)
             {
-                PlayerPrefs.SetInt("TotalFruitsAmount", FruitsInBank() - price);
+                SaveSystem.SaveFruitsBank(FruitsInBank() - price);
                 return true;
             }
 

@@ -21,10 +21,10 @@ namespace Game._Scripts.Managers
             levelTimer += Time.deltaTime;
             UIInGame.Instance.UpdateTimer(levelTimer);
         }
-        
-        public void SaveBestTimeForLevel(int levelIndex)
+
+        public void SaveBestTimeForLevel(int currentLevelIndex)
         {
-            PlayerPrefs.SetFloat($"Level{levelIndex}BestTime", levelTimer);
+            SaveSystem.SaveBestTime(currentLevelIndex, levelTimer);
         }
     }
 }

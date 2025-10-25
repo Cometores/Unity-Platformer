@@ -23,7 +23,7 @@ namespace Game._Scripts.UI.Buttons
         {
             _originalScale = transform.localScale;
             
-            var volume = PlayerPrefs.GetFloat(mixerName, Constants.DEFAULT_VOLUME);
+            var volume = SaveSystem.GetVolume(mixerName);
             Image.sprite = volume > 0 
                 ? normalSprite 
                 : mutedSprite;

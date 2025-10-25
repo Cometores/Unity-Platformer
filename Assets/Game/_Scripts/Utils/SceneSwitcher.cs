@@ -7,7 +7,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Game._Scripts.Tools
+namespace Game._Scripts.Utils
 {
     [InitializeOnLoad]
     public static class SceneSwitcherToolbar

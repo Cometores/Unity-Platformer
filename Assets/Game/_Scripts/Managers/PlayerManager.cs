@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Game._Scripts.Environment.Checkpoint;
+using Game._Scripts.Utils;
 using Unity.Mathematics;
 using UnityEngine;
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game._Scripts
+namespace Game._Scripts.Utils
 {
     public class DestroyMeEvent : MonoBehaviour
     {

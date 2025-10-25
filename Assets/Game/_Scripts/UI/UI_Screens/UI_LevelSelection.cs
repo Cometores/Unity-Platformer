@@ -34,7 +34,7 @@ namespace Game._Scripts.UI.UI_Screens
 
             for (int i = 0; i <= _levelsAmount; i++)
             {
-                levelsUnlocked[i] = PlayerPrefs.GetInt($"Level{i}Unlocked", 0) == 1;
+                levelsUnlocked[i] = SaveSystem.IsLevelUnlocked(i);
             }
         
             levelsUnlocked[1] = true;

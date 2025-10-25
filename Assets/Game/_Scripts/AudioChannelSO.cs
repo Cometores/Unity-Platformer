@@ -1,5 +1,4 @@
-﻿using Game._Scripts.UI.Buttons;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game._Scripts
 {
@@ -14,7 +13,7 @@ namespace Game._Scripts
 
         public float GetSavedVolume()
         {
-            volume = PlayerPrefs.GetFloat(channelName, Constants.DEFAULT_VOLUME);
+            volume = SaveSystem.GetVolume(channelName);
             return volume;
         }
     }
