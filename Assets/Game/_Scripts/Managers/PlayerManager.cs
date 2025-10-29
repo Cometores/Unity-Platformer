@@ -40,7 +40,7 @@ namespace Game._Scripts.Managers
         public void RespawnPlayer()
         {
             DifficultyManager difficultyManager = DifficultyManager.Instance;
-            if (difficultyManager != null && difficultyManager.difficulty == DifficultyType.Hard)
+            if (difficultyManager && difficultyManager.difficulty == DifficultyType.Hard)
                 return;
         
             StartCoroutine(RespawnCoroutine());
