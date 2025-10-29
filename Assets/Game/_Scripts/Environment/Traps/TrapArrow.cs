@@ -44,9 +44,8 @@ namespace Game._Scripts.Environment.Traps
 
         private void DestroyMe()
         {
-            GameObject arrowPrefab = GameManager.Instance.arrowPrefab;
-
-            GameManager.Instance.CreateObject(arrowPrefab, transform, cooldown);
+            GameObject arrowPrefab = ObjectSpawner.Instance.arrowPrefab;
+            ObjectSpawner.Instance.CreateObject(arrowPrefab, transform, cooldown);
             Destroy(gameObject);
         }
     }

@@ -124,7 +124,9 @@ namespace Game._Scripts.Enemy
         }
 
         public virtual void Flip()
-        {
+        { 
+            if (IsDead) return;
+            
             transform.Rotate(0, 180, 0);
             FacingRight = !FacingRight;
             FacingDir *= -1;

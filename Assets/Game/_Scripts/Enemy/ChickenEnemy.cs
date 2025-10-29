@@ -15,11 +15,10 @@ namespace Game._Scripts.Enemy
 
         protected override void Update()
         {
-            HandleAnimator();
-            
             base.Update();
         
             if (IsDead) return;
+            HandleAnimator();
         
             _aggroTimer -= Time.deltaTime;
 

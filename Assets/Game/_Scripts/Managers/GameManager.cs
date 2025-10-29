@@ -11,9 +11,6 @@ namespace Game._Scripts.Managers
         
         [SerializeField] private int currentLevelIndex;
 
-        [Header("Traps")]
-        public GameObject arrowPrefab;
-
         [Header("Managers")]
         [SerializeField] private AudioManager audioManager;
         [SerializeField] private PlayerManager playerManager;
@@ -58,21 +55,7 @@ namespace Game._Scripts.Managers
                 Instantiate(fruitManager);
         }
 
-        public void CreateObject(GameObject prefab, Transform target, float delay = 0)
-        {
-            StartCoroutine(CreateObjectCoroutine(prefab, target, delay));
-        }
-    
-        private IEnumerator CreateObjectCoroutine(GameObject prefab, Transform target, float delay)
-        {
-            Vector3 newPosition = target.position;
-        
-            yield return Helpers.GetWait(delay);
-
-            GameObject newObject = Instantiate(prefab, newPosition, Quaternion.identity);
-        }
-
-        public void RestartLevel()
+        public static void RestartLevel()
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }

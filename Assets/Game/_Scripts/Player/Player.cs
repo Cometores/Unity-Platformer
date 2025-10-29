@@ -143,7 +143,7 @@ namespace Game._Scripts.Player
             if (gameDifficulty == DifficultyType.Normal)
             {
                 if (FruitManager.Instance.FruitsCollected() <= 0)
-                    _gameManager.RestartLevel();
+                    GameManager.RestartLevel();
                 else
                     FruitManager.Instance.RemoveFruit();
 
@@ -152,7 +152,7 @@ namespace Game._Scripts.Player
 
             if (gameDifficulty == DifficultyType.Hard)
             {
-                _gameManager.RestartLevel();
+                GameManager.RestartLevel();
             }
         }
 
