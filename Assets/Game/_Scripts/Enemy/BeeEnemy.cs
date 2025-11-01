@@ -95,7 +95,7 @@ namespace Game._Scripts.Enemy
 
         protected void OnDrawGizmosSelected()
         {
-            Gizmos.color = Color.chartreuse;
+            Gizmos.color = Color.green;
             
             // InitializeWayPoints();
             
