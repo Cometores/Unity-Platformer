@@ -14,7 +14,7 @@ namespace Game._Scripts.Player.Gunner
         public event UnityAction<Vector2> AimEvent;
         
         private readonly PlayerWithGunInput _input;
-        private float _stickDeadZone = 0.2f;
+        private readonly float _stickDeadZone = 0.2f;
 
         public PlayerWithGunInputReader()
         {

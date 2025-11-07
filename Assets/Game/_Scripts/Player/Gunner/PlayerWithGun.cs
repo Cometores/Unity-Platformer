@@ -7,12 +7,13 @@ namespace Game._Scripts.Player.Gunner
     {
         [SerializeField, Range(0f, 30f)] private float gunAttachmentRadius = 2f;
         [SerializeField] private Transform gunSocket;
-        
+
         private UnityEngine.Camera _cam;
         private Rigidbody2D _rb;
         private PlayerWithGunInputReader _input;
-        private Vector2 _shootDirection;
         private IWeapon _weapon;
+        
+        private Vector2 _aimDirection;
         private Vector3 _mousePos;
 
         private void Awake()
@@ -20,7 +21,7 @@ namespace Game._Scripts.Player.Gunner
             _rb = GetComponent<Rigidbody2D>();
             _cam = UnityEngine.Camera.main;
             _input = new PlayerWithGunInputReader();
-            _weapon = new PistolWeapon();
+            _weapon = GetComponentInChildren<IWeapon>();
         }
 
         private void OnEnable()
@@ -33,6 +34,7 @@ namespace Game._Scripts.Player.Gunner
         private void OnDisable()
         {
             _input.ShootEvent -= OnShootEvent;
+            _input.AimEvent -= OnControllerAimEvent;
             _input.Disable();
         }
 
@@ -40,6 +42,8 @@ namespace Game._Scripts.Player.Gunner
         {
             if (WasMouseMoved())
                 SetGunPointForMice();
+
+            _weapon.Aim(_aimDirection);
         }
 
         private void SetGunPointForMice()
@@ -47,19 +51,24 @@ namespace Game._Scripts.Player.Gunner
             Vector2 origin = transform.position;
             Vector2 dir = _mousePos - transform.position;
             dir.Normalize();
-            
-            _shootDirection = dir;
+
+            _aimDirection = dir;
             gunSocket.position = origin + dir * gunAttachmentRadius;
         }
-        
+
         private void OnControllerAimEvent(Vector2 dir)
         {
             Vector2 origin = transform.position;
             dir.Normalize();
-            
-            _shootDirection = dir;
+
+            _aimDirection = dir;
             gunSocket.position = origin + dir * gunAttachmentRadius;
         }
+
+        // private void SetGunSocketPosition()
+        // {
+        //     
+        // }
 
         private bool WasMouseMoved()
         {
@@ -69,13 +78,13 @@ namespace Game._Scripts.Player.Gunner
                 _mousePos = mousePos;
                 return true;
             }
-            
+
             return false;
         }
-        
+
         private void OnShootEvent()
         {
-            _weapon.Shoot(_rb, -_shootDirection);
+            _weapon.Shoot(_rb, -_aimDirection);
         }
 
         private void OnDrawGizmosSelected()
