@@ -32,7 +32,6 @@ namespace Game._Scripts.Enemy
             {
                 Destroy(gameObject, .05f);
             }
-
         }
     }
 }
