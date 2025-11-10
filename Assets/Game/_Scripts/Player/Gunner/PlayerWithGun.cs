@@ -41,50 +41,31 @@ namespace Game._Scripts.Player.Gunner
         private void Update()
         {
             if (WasMouseMoved())
-                SetGunPointForMice();
+                SetGunSocketPosition(_mousePos - transform.position);
 
             _weapon.Aim(_aimDirection);
         }
 
-        private void SetGunPointForMice()
+        private void OnControllerAimEvent(Vector2 aimDirection) => SetGunSocketPosition(aimDirection);
+        private void OnShootEvent() => _weapon.Shoot(_rb, -_aimDirection);
+
+        private void SetGunSocketPosition(Vector2 aimDirection)
         {
             Vector2 origin = transform.position;
-            Vector2 dir = _mousePos - transform.position;
-            dir.Normalize();
+            aimDirection.Normalize();
 
-            _aimDirection = dir;
-            gunSocket.position = origin + dir * gunAttachmentRadius;
+            _aimDirection = aimDirection;
+            gunSocket.position = origin + aimDirection * gunAttachmentRadius;
         }
-
-        private void OnControllerAimEvent(Vector2 dir)
-        {
-            Vector2 origin = transform.position;
-            dir.Normalize();
-
-            _aimDirection = dir;
-            gunSocket.position = origin + dir * gunAttachmentRadius;
-        }
-
-        // private void SetGunSocketPosition()
-        // {
-        //     
-        // }
 
         private bool WasMouseMoved()
         {
             var mousePos = _cam.ScreenToWorldPoint(Input.mousePosition);
-            if (_mousePos != mousePos)
-            {
-                _mousePos = mousePos;
-                return true;
-            }
-
-            return false;
-        }
-
-        private void OnShootEvent()
-        {
-            _weapon.Shoot(_rb, -_aimDirection);
+            if (_mousePos == mousePos) 
+                return false;
+            
+            _mousePos = mousePos;
+            return true;
         }
 
         private void OnDrawGizmosSelected()
