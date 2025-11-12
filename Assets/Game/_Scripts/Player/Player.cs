@@ -9,11 +9,7 @@ namespace Game._Scripts.Player
     {
         public PlayerInput PlayerInput {get; private set; }
         
-        [SerializeField] private DifficultyType gameDifficulty;
         private GameManager _gameManager;
-
-        private Rigidbody2D _rb;
-        private Animator _anim;
         private CapsuleCollider2D _cd;
 
         [Header("Movement")]
@@ -30,10 +26,6 @@ namespace Game._Scripts.Player
         [Header("Wall interactions")]
         [SerializeField] private float wallJumpDuration = .6f;
         [SerializeField] private Vector2 wallJumpForce;
-
-        [Header("Knockback")]
-        [SerializeField] private float knockbackDuration;
-        [SerializeField] private Vector2 knockbackPower;
 
         [Header("Collision")]
         [SerializeField] private float groundCheckDistance;
@@ -58,7 +50,6 @@ namespace Game._Scripts.Player
         private bool _isWallDetected;
         private bool _canDoubleJump;
         private bool _isWallJumping;
-        private bool _isKnocked;
         private bool _canBeControlled = false;
 
         private float _defaultGravityScale;
@@ -69,16 +60,6 @@ namespace Game._Scripts.Player
         private static readonly int YVelocity = Animator.StringToHash("yVelocity");
         private static readonly int IsGrounded = Animator.StringToHash("isGrounded");
         private static readonly int IsWallDetected = Animator.StringToHash("isWallDetected");
-        private static readonly int IsKnocked = Animator.StringToHash("isKnocked");
-
-        private void Awake()
-        {
-            _rb = GetComponent<Rigidbody2D>();
-            _cd = GetComponent<CapsuleCollider2D>();
-            _anim = GetComponentInChildren<Animator>();
-
-            PlayerInput = new PlayerInput();
-        }
 
         private void OnEnable()
         {
@@ -97,12 +78,20 @@ namespace Game._Scripts.Player
             PlayerInput.Disable();
         }
 
-        private void Start()
+        protected override void Awake()
         {
+            base.Awake();
+            _cd = GetComponent<CapsuleCollider2D>();
+            PlayerInput = new PlayerInput();
+        }
+        
+        protected override void Start()
+        {
+            base.Start();
+            
             _gameManager = GameManager.Instance;
-            _defaultGravityScale = _rb.gravityScale;
+            _defaultGravityScale = Rb.gravityScale;
 
-            SetGameDifficulty();
             RespawnFinished(false);
             LoadSkin();
         }
@@ -118,7 +107,7 @@ namespace Game._Scripts.Player
                 return;
             }
 
-            if (_isKnocked) return;
+            if (IsKnocked) return;
 
             HandleEnemyDetection();
             HandleWallSlide();
@@ -135,37 +124,12 @@ namespace Game._Scripts.Player
             if (!skinManager)
                 return;
 
-            _anim.runtimeAnimatorController = animators[skinManager.ChosenSkinId];
-        }
-
-        public void Damage()
-        {
-            if (gameDifficulty == DifficultyType.Normal)
-            {
-                if (FruitManager.Instance.FruitsCollected() <= 0)
-                    GameManager.RestartLevel();
-                else
-                    FruitManager.Instance.RemoveFruit();
-
-                return;
-            }
-
-            if (gameDifficulty == DifficultyType.Hard)
-            {
-                GameManager.RestartLevel();
-            }
-        }
-
-        private void SetGameDifficulty()
-        {
-            DifficultyManager difficultyManager = DifficultyManager.Instance;
-            if (difficultyManager != null)
-                gameDifficulty = difficultyManager.difficulty;
+            Anim.runtimeAnimatorController = animators[skinManager.ChosenSkinId];
         }
 
         private void HandleEnemyDetection()
         {
-            if (_rb.linearVelocityY >= 0 || !enemyCheck)
+            if (Rb.linearVelocityY >= 0 || !enemyCheck)
                 return;
 
             Collider2D[] detectedEnemies = Physics2D.OverlapCircleAll(enemyCheck.position, enemyCheckRadius, whatIsEnemy);
@@ -185,7 +149,7 @@ namespace Game._Scripts.Player
         {
             if (finished)
             {
-                _rb.gravityScale = _defaultGravityScale;
+                Rb.gravityScale = _defaultGravityScale;
                 _canBeControlled = true;
                 _cd.enabled = true;
                 
@@ -193,24 +157,10 @@ namespace Game._Scripts.Player
             }
             else
             {
-                _rb.gravityScale = 0;
+                Rb.gravityScale = 0;
                 _canBeControlled = false;
                 _cd.enabled = false;
             }
-        }
-
-        public void Knockback(float sourceDamageXPosition)
-        {
-            if (_isKnocked) return;
-            
-            AudioManager.Instance.PlaySfx(9);
-            
-            float knockbackDir = transform.position.x < sourceDamageXPosition ? -1 : 1;
-
-            CameraManager.Instance.CameraShake(knockbackDir);
-
-            StartCoroutine(KnockbackRoutine());
-            _rb.linearVelocity = new Vector2(knockbackPower.x * knockbackDir, knockbackPower.y);
         }
 
         public void Die()
@@ -230,32 +180,21 @@ namespace Game._Scripts.Player
         {
             _canBeControlled = false;
 
-            _rb.linearVelocity = Vector2.zero;
-            _rb.AddForce(direction, ForceMode2D.Impulse);
+            Rb.linearVelocity = Vector2.zero;
+            Rb.AddForce(direction, ForceMode2D.Impulse);
 
             yield return Helpers.GetWait(duration);
 
             _canBeControlled = true;
         }
 
-        private IEnumerator KnockbackRoutine()
-        {
-            _isKnocked = true;
-            _anim.SetBool(IsKnocked, true);
-
-            yield return Helpers.GetWait(knockbackDuration);
-
-            _isKnocked = false;
-            _anim.SetBool(IsKnocked, false);
-        }
-
         private void HandleWallSlide()
         {
-            bool canWallSlide = _isWallDetected && _rb.linearVelocityY < 0;
+            bool canWallSlide = _isWallDetected && Rb.linearVelocityY < 0;
             if (!canWallSlide) return;
 
             float yModifier = _moveInput.y < 0 ? 1 : .05f;
-            _rb.linearVelocityY *= yModifier;
+            Rb.linearVelocityY *= yModifier;
         }
 
         private void UpdateAirborneStatus()
@@ -275,7 +214,7 @@ namespace Game._Scripts.Player
         {
             _isAirborne = true;
 
-            if (_rb.linearVelocityY < 0)
+            if (Rb.linearVelocityY < 0)
                 ActivateCoyoteJump();
         }
 
@@ -302,7 +241,7 @@ namespace Game._Scripts.Player
             if (_isWallJumping)
                 return;
 
-            _rb.linearVelocityX = _moveInput.x * moveSpeed;
+            Rb.linearVelocityX = _moveInput.x * moveSpeed;
         }
         
         private void OnMovementPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
@@ -317,12 +256,12 @@ namespace Game._Scripts.Player
 
         #region Jump
 
-        private void OnJumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
-        {
-            JumpButton();
-        }
+        private void OnJumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext _) => JumpButton();
+
         private void JumpButton()
         {
+            if (IsKnocked) return;
+            
             bool coyoteJumpAvalible = Time.time < _coyoteJumpActivated + coyouteJumpWindow;
 
             if (_isGrounded || coyoteJumpAvalible)
@@ -344,7 +283,7 @@ namespace Game._Scripts.Player
         private void Jump()
         {
             AudioManager.Instance.PlaySfx(3);
-            _rb.linearVelocityY = jumpForce;
+            Rb.linearVelocityY = jumpForce;
         }
 
         private void DoubleJump()
@@ -353,7 +292,7 @@ namespace Game._Scripts.Player
             
             _isWallJumping = false;
             _canDoubleJump = false;
-            _rb.linearVelocityY = doubleJumpForce;
+            Rb.linearVelocityY = doubleJumpForce;
         }
 
         private void WallJump()
@@ -361,7 +300,7 @@ namespace Game._Scripts.Player
             AudioManager.Instance.PlaySfx(12);
             
             _canDoubleJump = true;
-            _rb.linearVelocity = new Vector2(wallJumpForce.x * -_facingDirection, wallJumpForce.y);
+            Rb.linearVelocity = new Vector2(wallJumpForce.x * -_facingDirection, wallJumpForce.y);
 
             FLip();
 
@@ -422,10 +361,10 @@ namespace Game._Scripts.Player
 
         private void HandleAnimation()
         {
-            _anim.SetFloat(XVelocity, _rb.linearVelocityX);
-            _anim.SetFloat(YVelocity, _rb.linearVelocityY);
-            _anim.SetBool(IsGrounded, _isGrounded);
-            _anim.SetBool(IsWallDetected, _isWallDetected);
+            Anim.SetFloat(XVelocity, Rb.linearVelocityX);
+            Anim.SetFloat(YVelocity, Rb.linearVelocityY);
+            Anim.SetBool(IsGrounded, _isGrounded);
+            Anim.SetBool(IsWallDetected, _isWallDetected);
         }
 
         private void OnDrawGizmos()

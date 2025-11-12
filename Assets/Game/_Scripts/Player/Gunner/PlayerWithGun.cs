@@ -16,8 +16,10 @@ namespace Game._Scripts.Player.Gunner
         private Vector2 _aimDirection;
         private Vector3 _mousePos;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+            
             _rb = GetComponent<Rigidbody2D>();
             _cam = UnityEngine.Camera.main;
             _input = new PlayerWithGunInputReader();
@@ -47,7 +49,13 @@ namespace Game._Scripts.Player.Gunner
         }
 
         private void OnControllerAimEvent(Vector2 aimDirection) => SetGunSocketPosition(aimDirection);
-        private void OnShootEvent() => _weapon.Shoot(_rb, -_aimDirection);
+        private void OnShootEvent()
+        {
+            if (IsKnocked)
+                return;
+            
+            _weapon.Shoot(_rb, -_aimDirection);
+        }
 
         private void SetGunSocketPosition(Vector2 aimDirection)
         {

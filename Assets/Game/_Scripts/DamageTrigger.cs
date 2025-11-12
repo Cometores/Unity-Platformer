@@ -1,3 +1,4 @@
+using Game._Scripts.Player;
 using UnityEngine;
 
 namespace Game._Scripts
@@ -6,11 +7,11 @@ namespace Game._Scripts
     {
         private void OnTriggerEnter2D(Collider2D other)
         {
-            Player.Player player = other.gameObject.GetComponent<Player.Player>();
+            PlayerBase player = other.gameObject.GetComponent<PlayerBase>();
 
             if (player)
             {
-                player.Damage();
+                player.GetDamage();
                 player.Knockback(transform.position.x);
             }
         }

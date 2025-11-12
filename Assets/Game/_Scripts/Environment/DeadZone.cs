@@ -25,7 +25,7 @@ namespace Game._Scripts.Environment
             Player.Player player = other.gameObject.GetComponent<Player.Player>();
             if (player)
             {
-                player.Damage();
+                player.GetDamage();
                 player.Die();
                 PlayerManager.Instance.RespawnPlayer();
             }
