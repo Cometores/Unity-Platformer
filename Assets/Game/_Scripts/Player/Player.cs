@@ -163,12 +163,10 @@ namespace Game._Scripts.Player
             }
         }
 
-        public void Die()
+        public override void Die()
         {
-            AudioManager.Instance.PlaySfx(8);
-            
             Instantiate(deathVfx, transform.position, Quaternion.identity);
-            Destroy(gameObject);
+            base.Die();
         }
 
         public void Push(Vector2 direction, float duration = 0)

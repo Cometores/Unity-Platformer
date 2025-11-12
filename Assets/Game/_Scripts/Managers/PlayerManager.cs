@@ -14,7 +14,7 @@ namespace Game._Scripts.Managers
         public static PlayerManager Instance;
     
         [Header("Player")]
-        [SerializeField] private GameObject playerPrefab;
+        public GameObject playerPrefab;
         [SerializeField] private Transform respawnPoint;
         [SerializeField] private float respawnDelay = 1.5f;
         public PlayerBase player;
@@ -25,10 +25,7 @@ namespace Game._Scripts.Managers
                 Instance = this;
             else
                 Destroy(gameObject);
-        }
-
-        private void Start()
-        {
+            
             if (respawnPoint == null)
                 respawnPoint = FindFirstObjectByType<StartPoint>().transform;
 
@@ -37,6 +34,8 @@ namespace Game._Scripts.Managers
         }
         
         #region Player respawn logic
+        
+        public void UpdateRespawnPoint(Transform newRespawnPoint) => respawnPoint = newRespawnPoint;
         
         public void RespawnPlayer()
         {
@@ -57,8 +56,13 @@ namespace Game._Scripts.Managers
             OnPlayerRespawn?.Invoke();
         }
         
-        public void UpdateRespawnPoint(Transform newRespawnPoint) => respawnPoint = newRespawnPoint;
-        
         #endregion
+        
+        public void ChangePlayer(GameObject newPlayerPrefab)
+        {
+            playerPrefab = newPlayerPrefab;
+            Destroy(player.gameObject);
+            RespawnPlayer();
+        }
     }
 }

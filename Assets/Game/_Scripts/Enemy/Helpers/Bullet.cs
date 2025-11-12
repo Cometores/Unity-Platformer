@@ -1,3 +1,4 @@
+using Game._Scripts.Player;
 using UnityEngine;
 
 namespace Game._Scripts.Enemy
@@ -24,7 +25,7 @@ namespace Game._Scripts.Enemy
         {
             if (other.gameObject.layer == LayerMask.NameToLayer(playerLayerName))
             {
-                other.GetComponent<Player.Player>().Knockback(transform.position.x);
+                other.GetComponent<PlayerBase>().Knockback(transform.position.x);
                 Destroy(gameObject);
             }
 

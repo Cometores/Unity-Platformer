@@ -1,4 +1,5 @@
 using Game._Scripts.Managers;
+using Game._Scripts.Player;
 using UnityEngine;
 
 namespace Game._Scripts.Environment
@@ -22,7 +23,7 @@ namespace Game._Scripts.Environment
 
         private static void TryKillPlayer(Collider2D other)
         {
-            Player.Player player = other.gameObject.GetComponent<Player.Player>();
+            PlayerBase player = other.gameObject.GetComponent<PlayerBase>();
             if (player)
             {
                 player.GetDamage();

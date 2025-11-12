@@ -30,16 +30,18 @@ namespace Game._Scripts.UI.UI_Screens
         private void OnEnable()
         {
             _playerInput.Enable();
-            _playerInput.UI.Pause.performed += PauseButton;
+            _playerInput.UI.Pause.performed += OnPauseButton;
         }
 
         private void OnDisable()
         {
-            _playerInput.UI.Pause.performed -= PauseButton;
+            _playerInput.UI.Pause.performed -= OnPauseButton;
             _playerInput.Disable();
         }
 
-        public void PauseButton(InputAction.CallbackContext _)
+        private void OnPauseButton(InputAction.CallbackContext _) => TogglePause();
+
+        public void TogglePause()
         {
             if (_isPaused)
                 ResumeGame();
@@ -61,6 +63,12 @@ namespace Game._Scripts.UI.UI_Screens
             _isPaused = false;
             Time.timeScale = 1f;
             pauseUI.SetActive(false);
+        }
+        
+        public void RestartLevelButton()
+        {
+            Time.timeScale = 1;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
         public void GoToMainMenuButton()

@@ -68,6 +68,8 @@ namespace Game._Scripts.Player.Gunner
 
         private bool WasMouseMoved()
         {
+            // TODO: Doesn't work with cinemachine
+            
             var mousePos = _cam.ScreenToWorldPoint(Input.mousePosition);
             if (_mousePos == mousePos) 
                 return false;

@@ -1,3 +1,4 @@
+using Game._Scripts.Player;
 using UnityEngine;
 
 namespace Game._Scripts.Camera
@@ -13,7 +14,7 @@ namespace Game._Scripts.Camera
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            Player.Player player = other.gameObject.GetComponent<Player.Player>();
+            PlayerBase player = other.gameObject.GetComponent<PlayerBase>();
 
             if (player)
             {
@@ -24,7 +25,7 @@ namespace Game._Scripts.Camera
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            Player.Player player = other.gameObject.GetComponent<Player.Player>();
+            PlayerBase player = other.gameObject.GetComponent<PlayerBase>();
 
             if (player)
             {

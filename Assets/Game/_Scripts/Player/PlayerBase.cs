@@ -77,6 +77,12 @@ namespace Game._Scripts.Player
             }
         }
 
+        public virtual void Die()
+        {
+            AudioManager.Instance.PlaySfx(8);
+            Destroy(gameObject);
+        }
+
         private void SetGameDifficulty()
         {
             DifficultyManager difficultyManager = DifficultyManager.Instance;
