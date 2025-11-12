@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Game._Scripts.Player
 {
-    public class Player : MonoBehaviour
+    public class Player : PlayerBase
     {
         public PlayerInput PlayerInput {get; private set; }
         
@@ -436,5 +436,9 @@ namespace Game._Scripts.Player
             Gizmos.DrawLine(transform.position,
                 new Vector2(transform.position.x + (wallCheckDistance * _facingDirection), transform.position.y));
         }
+
+        public override void DisableInput() => PlayerInput.Disable();
+
+        public override void EnableInput() => PlayerInput.Enable();
     }
 }

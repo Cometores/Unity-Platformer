@@ -64,6 +64,7 @@ namespace Game._Scripts.Enemy
 
         private void UpdatePlayerReference()
         {
+            Debug.Log(PlayerManager.Instance != null);
             if (!Player)
                 Player = PlayerManager.Instance.player.transform;
         }

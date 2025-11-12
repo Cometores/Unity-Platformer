@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Game._Scripts.Environment.Checkpoint;
+using Game._Scripts.Player;
 using Game._Scripts.Utils;
 using Unity.Mathematics;
 using UnityEngine;
@@ -16,7 +17,7 @@ namespace Game._Scripts.Managers
         [SerializeField] private GameObject playerPrefab;
         [SerializeField] private Transform respawnPoint;
         [SerializeField] private float respawnDelay = 1.5f;
-        public Player.Player player;
+        public PlayerBase player;
 
         private void Awake()
         {
@@ -51,7 +52,7 @@ namespace Game._Scripts.Managers
             yield return Helpers.GetWait(respawnDelay);
         
             GameObject newPlayer = Instantiate(playerPrefab, respawnPoint.position, quaternion.identity);
-            player = newPlayer.GetComponent<Player.Player>();
+            player = newPlayer.GetComponent<PlayerBase>();
             
             OnPlayerRespawn?.Invoke();
         }

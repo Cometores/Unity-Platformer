@@ -1,6 +1,7 @@
 using Game._Scripts.Managers;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 namespace Game._Scripts.UI.UI_Screens
@@ -29,16 +30,16 @@ namespace Game._Scripts.UI.UI_Screens
         private void OnEnable()
         {
             _playerInput.Enable();
-            _playerInput.UI.Pause.performed += ctx => PauseButton();
+            _playerInput.UI.Pause.performed += PauseButton;
         }
 
         private void OnDisable()
         {
-            _playerInput.UI.Pause.performed -= ctx => PauseButton();
+            _playerInput.UI.Pause.performed -= PauseButton;
             _playerInput.Disable();
         }
 
-        public void PauseButton()
+        public void PauseButton(InputAction.CallbackContext _)
         {
             if (_isPaused)
                 ResumeGame();
@@ -48,7 +49,7 @@ namespace Game._Scripts.UI.UI_Screens
 
         private void PauseGame()
         {
-            PlayerManager.Instance.player.PlayerInput.Disable();
+            PlayerManager.Instance.player.DisableInput();
             _isPaused = true;
             Time.timeScale = 0;
             pauseUI.SetActive(true);
@@ -56,7 +57,7 @@ namespace Game._Scripts.UI.UI_Screens
 
         private void ResumeGame()
         {
-            PlayerManager.Instance.player.PlayerInput.Enable();
+            PlayerManager.Instance.player.EnableInput();
             _isPaused = false;
             Time.timeScale = 1f;
             pauseUI.SetActive(false);

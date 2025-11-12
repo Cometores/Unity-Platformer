@@ -1,4 +1,5 @@
 using Game._Scripts.Managers;
+using Game._Scripts.Player;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,7 @@ namespace Game._Scripts.Debugging
     {
         [SerializeField] private GameObject checkpoint;
         private Button _button;
-        private static Player.Player Player => PlayerManager.Instance.player;
+        private static PlayerBase Player => PlayerManager.Instance.player;
 
         private void Awake()
         {

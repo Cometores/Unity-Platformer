@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game._Scripts.Player.Gunner
 {
-    public class PlayerWithGun : MonoBehaviour
+    public class PlayerWithGun : PlayerBase
     {
         [SerializeField, Range(0f, 30f)] private float gunAttachmentRadius = 2f;
         [SerializeField] private Transform gunSocket;
@@ -73,5 +73,9 @@ namespace Game._Scripts.Player.Gunner
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(transform.position, gunAttachmentRadius);
         }
+
+        public override void DisableInput() => _input.Disable();
+
+        public override void EnableInput() => _input.Enable();
     }
 }
