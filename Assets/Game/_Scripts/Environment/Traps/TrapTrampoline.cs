@@ -1,3 +1,4 @@
+using Game._Scripts.Player;
 using UnityEngine;
 
 namespace Game._Scripts.Environment.Traps
@@ -18,7 +19,7 @@ namespace Game._Scripts.Environment.Traps
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            Player.Player player = other.gameObject.GetComponent<Player.Player>();
+            PlayerBase player = other.gameObject.GetComponent<PlayerBase>();
 
             if (player)
             {

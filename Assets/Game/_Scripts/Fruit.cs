@@ -1,4 +1,5 @@
 using Game._Scripts.Managers;
+using Game._Scripts.Player;
 using UnityEngine;
 
 namespace Game._Scripts
@@ -17,14 +18,11 @@ namespace Game._Scripts
 
     public class Fruit : MonoBehaviour
     {
-        private GameManager _gameManager;
-        private Animator _animator;
-
         [SerializeField] private FruitType fruitType;
-
         [SerializeField] private GameObject pickupVFX;
-    
         [SerializeField] private int animCount = 8;
+        
+        private Animator _animator;
         private static readonly int FruitIndex = Animator.StringToHash("fruitIndex");
 
 
@@ -35,7 +33,6 @@ namespace Game._Scripts
 
         private void Start()
         {
-            _gameManager = GameManager.Instance;
             SetRandomLookIfNeeded();
         }
 
@@ -53,7 +50,7 @@ namespace Game._Scripts
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            Player.Player player = other.GetComponent<Player.Player>();
+            PlayerBase player = other.GetComponent<PlayerBase>();
 
             if (player)
             {

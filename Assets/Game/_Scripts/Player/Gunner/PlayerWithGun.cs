@@ -26,6 +26,8 @@ namespace Game._Scripts.Player.Gunner
             _weapon = GetComponentInChildren<IWeapon>();
         }
 
+        #region Input enabling / disabling
+
         private void OnEnable()
         {
             _input.ShootEvent += OnShootEvent;
@@ -39,6 +41,12 @@ namespace Game._Scripts.Player.Gunner
             _input.AimEvent -= OnControllerAimEvent;
             _input.Disable();
         }
+        
+        public override void DisableInput() => _input.Disable();
+
+        public override void EnableInput() => _input.Enable();
+
+        #endregion
 
         private void Update()
         {
@@ -49,6 +57,7 @@ namespace Game._Scripts.Player.Gunner
         }
 
         private void OnControllerAimEvent(Vector2 aimDirection) => SetGunSocketPosition(aimDirection);
+        
         private void OnShootEvent()
         {
             if (IsKnocked)
@@ -83,9 +92,5 @@ namespace Game._Scripts.Player.Gunner
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(transform.position, gunAttachmentRadius);
         }
-
-        public override void DisableInput() => _input.Disable();
-
-        public override void EnableInput() => _input.Enable();
     }
 }

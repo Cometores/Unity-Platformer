@@ -1,4 +1,5 @@
 using System.Collections;
+using Game._Scripts.Player;
 using Game._Scripts.Utils;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -87,7 +88,7 @@ namespace Game._Scripts.Environment.Traps
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            Player.Player player = other.gameObject.GetComponent<Player.Player>();
+            PlayerBase player = other.gameObject.GetComponent<PlayerBase>();
 
             if (player != null)
             {

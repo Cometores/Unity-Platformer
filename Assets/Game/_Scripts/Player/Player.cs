@@ -50,7 +50,6 @@ namespace Game._Scripts.Player
         private bool _isWallDetected;
         private bool _canDoubleJump;
         private bool _isWallJumping;
-        private bool _canBeControlled = false;
 
         private float _defaultGravityScale;
 
@@ -61,12 +60,15 @@ namespace Game._Scripts.Player
         private static readonly int IsGrounded = Animator.StringToHash("isGrounded");
         private static readonly int IsWallDetected = Animator.StringToHash("isWallDetected");
 
+        #region Input enabling / disabling
+
         private void OnEnable()
         {
-            PlayerInput.Enable();
             PlayerInput.Player.Jump.performed += OnJumpPerformed;
             PlayerInput.Player.Movement.performed += OnMovementPerformed;
             PlayerInput.Player.Movement.canceled += OnMovementCanceled;
+
+            EnableInput();
         }
 
         private void OnDisable()
@@ -75,8 +77,14 @@ namespace Game._Scripts.Player
             PlayerInput.Player.Movement.performed -= OnMovementPerformed;
             PlayerInput.Player.Movement.canceled -= OnMovementCanceled;
             
-            PlayerInput.Disable();
+            DisableInput();
         }
+        
+        public override void DisableInput() => PlayerInput.Disable();
+
+        public override void EnableInput() => PlayerInput.Enable();
+        
+        #endregion
 
         protected override void Awake()
         {
@@ -100,7 +108,7 @@ namespace Game._Scripts.Player
         {
             UpdateAirborneStatus();
 
-            if (!_canBeControlled)
+            if (!CanBeControlled)
             {
                 HandleCollision();
                 HandleAnimation();
@@ -150,7 +158,7 @@ namespace Game._Scripts.Player
             if (finished)
             {
                 Rb.gravityScale = _defaultGravityScale;
-                _canBeControlled = true;
+                CanBeControlled = true;
                 _cd.enabled = true;
                 
                 AudioManager.Instance.PlaySfx(11);
@@ -158,7 +166,7 @@ namespace Game._Scripts.Player
             else
             {
                 Rb.gravityScale = 0;
-                _canBeControlled = false;
+                CanBeControlled = false;
                 _cd.enabled = false;
             }
         }
@@ -167,23 +175,6 @@ namespace Game._Scripts.Player
         {
             Instantiate(deathVfx, transform.position, Quaternion.identity);
             base.Die();
-        }
-
-        public void Push(Vector2 direction, float duration = 0)
-        {
-            StartCoroutine(PushCoroutine(direction, duration));
-        }
-
-        private IEnumerator PushCoroutine(Vector2 direction, float duration)
-        {
-            _canBeControlled = false;
-
-            Rb.linearVelocity = Vector2.zero;
-            Rb.AddForce(direction, ForceMode2D.Impulse);
-
-            yield return Helpers.GetWait(duration);
-
-            _canBeControlled = true;
         }
 
         private void HandleWallSlide()
@@ -373,9 +364,5 @@ namespace Game._Scripts.Player
             Gizmos.DrawLine(transform.position,
                 new Vector2(transform.position.x + (wallCheckDistance * _facingDirection), transform.position.y));
         }
-
-        public override void DisableInput() => PlayerInput.Disable();
-
-        public override void EnableInput() => PlayerInput.Enable();
     }
 }

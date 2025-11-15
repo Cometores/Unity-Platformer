@@ -1,4 +1,5 @@
 using Game._Scripts.Managers;
+using Game._Scripts.Player;
 using UnityEngine;
 
 namespace Game._Scripts.Environment.Checkpoint
@@ -6,11 +7,13 @@ namespace Game._Scripts.Environment.Checkpoint
     public class FinishPoint : MonoBehaviour
     {
         private static readonly int Activate = Animator.StringToHash("activate");
-        private Animator _anim => GetComponent<Animator>();
-    
+        private Animator _anim;
+
+        private void Awake() => _anim = GetComponent<Animator>();
+
         private void OnTriggerEnter2D(Collider2D other)
         {
-            Player.Player player = other.GetComponent<Player.Player>();
+            PlayerBase player = other.GetComponent<PlayerBase>();
 
             if (player)
             {

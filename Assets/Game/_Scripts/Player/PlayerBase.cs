@@ -15,7 +15,9 @@ namespace Game._Scripts.Player
         
         protected Rigidbody2D Rb;
         protected Animator Anim;
+        
         protected bool IsKnocked;
+        protected bool CanBeControlled = false;
         
         private static readonly int IsKnockedHash = Animator.StringToHash("isKnocked");
 
@@ -88,6 +90,23 @@ namespace Game._Scripts.Player
             DifficultyManager difficultyManager = DifficultyManager.Instance;
             if (difficultyManager != null)
                 gameDifficulty = difficultyManager.difficulty;
+        }
+        
+        public void Push(Vector2 direction, float duration = 0)
+        {
+            StartCoroutine(PushCoroutine(direction, duration));
+        }
+
+        private IEnumerator PushCoroutine(Vector2 direction, float duration)
+        {
+            CanBeControlled = false;
+
+            Rb.linearVelocity = Vector2.zero;
+            Rb.AddForce(direction, ForceMode2D.Impulse);
+
+            yield return Helpers.GetWait(duration);
+
+            CanBeControlled = true;
         }
     }
 }

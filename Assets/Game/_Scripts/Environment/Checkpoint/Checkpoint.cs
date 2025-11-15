@@ -1,4 +1,5 @@
 using Game._Scripts.Managers;
+using Game._Scripts.Player;
 using UnityEngine;
 
 namespace Game._Scripts.Environment.Checkpoint
@@ -15,7 +16,7 @@ namespace Game._Scripts.Environment.Checkpoint
         {
             if (_active) return;
 
-            Player.Player player = other.GetComponent<Player.Player>();
+            PlayerBase player = other.GetComponent<PlayerBase>();
 
             if (player)
                 ActivateCheckpoint();

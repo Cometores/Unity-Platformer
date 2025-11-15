@@ -28,7 +28,7 @@ namespace Game._Scripts.Environment
             {
                 player.GetDamage();
                 player.Die();
-                PlayerManager.Instance.RespawnPlayer();
+                PlayerManager.Instance.TryRespawnPlayer();
             }
         }
     }

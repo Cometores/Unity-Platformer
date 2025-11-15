@@ -21,23 +21,23 @@ namespace Game._Scripts.Managers
 
         private void Awake()
         {
-            if (Instance == null)
+            if (!Instance)
                 Instance = this;
             else
                 Destroy(gameObject);
             
-            if (respawnPoint == null)
+            if (!respawnPoint)
                 respawnPoint = FindFirstObjectByType<StartPoint>().transform;
 
-            if (player == null)
-                player = FindFirstObjectByType<Player.Player>();
+            if (!player)
+                player = FindFirstObjectByType<PlayerBase>();
         }
         
         #region Player respawn logic
         
         public void UpdateRespawnPoint(Transform newRespawnPoint) => respawnPoint = newRespawnPoint;
         
-        public void RespawnPlayer()
+        public void TryRespawnPlayer()
         {
             DifficultyManager difficultyManager = DifficultyManager.Instance;
             if (difficultyManager && difficultyManager.difficulty == DifficultyType.Hard)
@@ -49,20 +49,24 @@ namespace Game._Scripts.Managers
         private IEnumerator RespawnCoroutine()
         {
             yield return Helpers.GetWait(respawnDelay);
-        
+            SpawnPlayer();
+        }
+
+        private void SpawnPlayer()
+        {
             GameObject newPlayer = Instantiate(playerPrefab, respawnPoint.position, quaternion.identity);
             player = newPlayer.GetComponent<PlayerBase>();
             
             OnPlayerRespawn?.Invoke();
         }
-        
+
         #endregion
         
         public void ChangePlayer(GameObject newPlayerPrefab)
         {
             playerPrefab = newPlayerPrefab;
             Destroy(player.gameObject);
-            RespawnPlayer();
+            SpawnPlayer();
         }
     }
 }

@@ -1,6 +1,5 @@
 using Game._Scripts.Managers;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Game._Scripts.Environment.Traps
 {
@@ -12,7 +11,6 @@ namespace Game._Scripts.Environment.Traps
         [SerializeField] private float rotationSpeed = 120;
         private int _direction = 1;
 
-        [FormerlySerializedAs("growSpeed")]
         [Space]
         [SerializeField] private float scaleUpSpeed = 10;
         [SerializeField] private Vector3 targetScale;
