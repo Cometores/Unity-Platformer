@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using Game._Scripts.Utils;
+using UnityEngine;
 
 namespace Game._Scripts.Player.Gunner.Weapons
 {
@@ -45,5 +48,7 @@ namespace Game._Scripts.Player.Gunner.Weapons
             _trail.emitting = false;
             _trail.endColor = Color.clear;
         }
+
+        private void OnBecameInvisible() => Destroy(gameObject);
     }
 }

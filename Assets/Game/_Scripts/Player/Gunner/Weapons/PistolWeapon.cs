@@ -5,6 +5,7 @@ namespace Game._Scripts.Player.Gunner.Weapons
     public class PistolWeapon : MonoBehaviour, IWeapon
     {
         [SerializeField] private GameObject bulletPrefab;
+        [SerializeField] private Transform shootingSocket;
         
         private readonly float _shotStrength = 10f;
         private bool _isFacingRight = true;
@@ -17,7 +18,7 @@ namespace Game._Scripts.Player.Gunner.Weapons
 
         public void Shoot(Rigidbody2D playerRb, Vector2 shootDirection)
         {
-            GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+            GameObject bullet = Instantiate(bulletPrefab, shootingSocket.position, Quaternion.identity);
             bullet.GetComponent<PistolBullet>().Initialize(3,20, -shootDirection);
             
             playerRb.AddForce(shootDirection * _shotStrength, ForceMode2D.Impulse);

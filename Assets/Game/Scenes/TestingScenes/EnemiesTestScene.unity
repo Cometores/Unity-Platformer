@@ -1649,6 +1649,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &232406591 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4987503029215681953, guid: 9c82f046950304d4096537b288747711, type: 3}
+  m_PrefabInstance: {fileID: 2563042996668604199}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &232406596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232406591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 326e2966700511e4ba5b406d46d29d7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game._Scripts.UI.Buttons.SelectableGuard
 --- !u!1 &254130810
 GameObject:
   m_ObjectHideFlags: 0
@@ -7620,6 +7637,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1504280164058112069, guid: 9c82f046950304d4096537b288747711, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1554676825}
+    - targetCorrespondingSourceObject: {fileID: 4987503029215681953, guid: 9c82f046950304d4096537b288747711, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 232406596}
   m_SourcePrefab: {fileID: 100100000, guid: 9c82f046950304d4096537b288747711, type: 3}
 --- !u!1001 &5742836858913547279
 PrefabInstance:

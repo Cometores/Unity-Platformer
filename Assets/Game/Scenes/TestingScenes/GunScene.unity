@@ -694,6 +694,11 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!4 &1234929600 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7995716348945183783, guid: 3958bb0fbc805d4408640ac6659aa25a, type: 3}
+  m_PrefabInstance: {fileID: 6758506301654204352}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1514400641
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1076,6 +1081,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7290289732923963972, guid: 3958bb0fbc805d4408640ac6659aa25a, type: 3}
+      propertyPath: shootingSocket
+      value: 
+      objectReference: {fileID: 1234929600}
     - target: {fileID: 7447448677043104841, guid: 3958bb0fbc805d4408640ac6659aa25a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

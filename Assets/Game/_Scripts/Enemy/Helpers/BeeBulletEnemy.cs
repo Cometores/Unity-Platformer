@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game._Scripts.Utils;
@@ -36,6 +35,7 @@ namespace Game._Scripts.Enemy
             if (Vector2.Distance(transform.position, _wayPoints[_wayIndex]) < .1f)
             {
                 _wayIndex++;
+                _wayIndex %= _wayPoints.Count;
                 transform.up = transform.position - _wayPoints[_wayIndex];
             }
         }

@@ -64,8 +64,8 @@ namespace Game._Scripts.Enemy
 
         private void UpdatePlayerReference()
         {
-            if (!Player)
-                Player = PlayerManager.Instance.player.transform;
+            // if (!Player) 
+            Player = PlayerManager.Instance.player.transform;
         }
 
         protected virtual void Update()

@@ -58,8 +58,8 @@ namespace Game._Scripts.Enemy
         {
             if (!CanMove) return;
 
-            // TODO: Fix when player is dead
-            HandleFlip(Player.transform.position.x);
+            if (Player)
+                HandleFlip(Player.transform.position.x);
 
             if (IsGroundInFront)
                 Rb.linearVelocityX = moveSpeed * FacingDir;
