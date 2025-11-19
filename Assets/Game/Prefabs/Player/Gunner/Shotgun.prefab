@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7173524889670918521}
   - component: {fileID: 1909593461463877756}
-  - component: {fileID: 4009530855980007797}
+  - component: {fileID: 2640733766028032218}
   m_Layer: 7
   m_Name: Shotgun
   m_TagString: Untagged
@@ -26,9 +26,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4043900728081137003}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.079, y: 0.092, z: 0}
-  m_LocalScale: {x: 2.7178, y: 2.7178, z: 2.7178}
+  m_LocalScale: {x: 2.71, y: 2.71, z: 2.71}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8136496420883243171}
@@ -92,7 +92,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4009530855980007797
+--- !u!114 &2640733766028032218
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,10 +101,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4043900728081137003}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ce4023ff89848d7a33dc621ee48d047, type: 3}
+  m_Script: {fileID: 11500000, guid: ad154e670112cda44a5fb87da00eeb0b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Game._Scripts.Player.Gunner.Weapons.PistolWeapon
-  bulletPrefab: {fileID: 7385181362094990113, guid: 5fe46904afcf56e42bf1d155d9e9f45e, type: 3}
+  m_EditorClassIdentifier: Assembly-CSharp::Game._Scripts.Player.Gunner.Weapons.RocketWeapon
+  bulletPrefab: {fileID: 629788366716161563, guid: a6bc2edf226b8fb42942be8a781c061b, type: 3}
   shootingSocket: {fileID: 8136496420883243171}
 --- !u!1 &7627509180125190912
 GameObject:

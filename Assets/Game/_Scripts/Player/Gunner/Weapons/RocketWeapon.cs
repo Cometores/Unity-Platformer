@@ -1,6 +1,6 @@
 ﻿namespace Game._Scripts.Player.Gunner.Weapons
 {
-    public class PistolWeapon : WeaponBase
+    public class RocketWeapon : WeaponBase
     {
     }
 }

@@ -11,7 +11,7 @@ namespace Game._Scripts.Player.Gunner
         private UnityEngine.Camera _cam;
         private Rigidbody2D _rb;
         private PlayerWithGunInputReader _input;
-        private IWeapon _weapon;
+        private WeaponBase _weapon;
         
         private Vector2 _aimDirection;
         private Vector3 _mousePos;
@@ -23,7 +23,7 @@ namespace Game._Scripts.Player.Gunner
             _rb = GetComponent<Rigidbody2D>();
             _cam = UnityEngine.Camera.main;
             _input = new PlayerWithGunInputReader();
-            _weapon = GetComponentInChildren<IWeapon>();
+            _weapon = GetComponentInChildren<WeaponBase>();
         }
 
         #region Input enabling / disabling
