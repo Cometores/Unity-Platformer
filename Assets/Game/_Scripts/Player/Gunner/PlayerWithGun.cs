@@ -11,7 +11,11 @@ namespace Game._Scripts.Player.Gunner
         private UnityEngine.Camera _cam;
         private Rigidbody2D _rb;
         private PlayerWithGunInputReader _input;
-        private WeaponBase _weapon;
+        
+        private WeaponBase[] _weapons;
+        private WeaponBase _activeWeapon;
+        private int _weaponNums;
+        private int _currentWeaponIndex;
         
         private Vector2 _aimDirection;
         private Vector3 _mousePos;
@@ -23,7 +27,11 @@ namespace Game._Scripts.Player.Gunner
             _rb = GetComponent<Rigidbody2D>();
             _cam = UnityEngine.Camera.main;
             _input = new PlayerWithGunInputReader();
-            _weapon = GetComponentInChildren<WeaponBase>();
+            
+            _weapons = GetComponentsInChildren<WeaponBase>(true);
+            _weaponNums = _weapons.Length;
+            _currentWeaponIndex = 0;
+            _activeWeapon = _weapons[0];
         }
 
         #region Input enabling / disabling
@@ -32,6 +40,7 @@ namespace Game._Scripts.Player.Gunner
         {
             _input.ShootEvent += OnShootEvent;
             _input.AimEvent += OnControllerAimEvent;
+            _input.WeaponChangeEvent += OnWeaponChangeEvent;
             _input.Enable();
         }
 
@@ -39,6 +48,7 @@ namespace Game._Scripts.Player.Gunner
         {
             _input.ShootEvent -= OnShootEvent;
             _input.AimEvent -= OnControllerAimEvent;
+            _input.WeaponChangeEvent -= OnWeaponChangeEvent;
             _input.Disable();
         }
         
@@ -53,7 +63,7 @@ namespace Game._Scripts.Player.Gunner
             if (WasMouseMoved())
                 SetGunSocketPosition(_mousePos - transform.position);
 
-            _weapon.Aim(_aimDirection);
+            _activeWeapon.Aim(_aimDirection);
         }
 
         private void OnControllerAimEvent(Vector2 aimDirection) => SetGunSocketPosition(aimDirection);
@@ -63,7 +73,19 @@ namespace Game._Scripts.Player.Gunner
             if (IsKnocked)
                 return;
             
-            _weapon.Shoot(_rb, -_aimDirection);
+            _activeWeapon.Shoot(_rb, -_aimDirection);
+        }
+
+        private void OnWeaponChangeEvent(int direction)
+        {
+            _activeWeapon.gameObject.SetActive(false);
+            
+            _currentWeaponIndex = (_currentWeaponIndex + direction) % _weaponNums;
+            if (_currentWeaponIndex == -1)
+                _currentWeaponIndex = _weaponNums - 1;
+            _activeWeapon = _weapons[_currentWeaponIndex];
+            
+            _activeWeapon.gameObject.SetActive(true);
         }
 
         private void SetGunSocketPosition(Vector2 aimDirection)

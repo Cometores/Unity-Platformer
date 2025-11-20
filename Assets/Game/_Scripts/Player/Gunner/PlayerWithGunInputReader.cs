@@ -12,6 +12,7 @@ namespace Game._Scripts.Player.Gunner
     {
         public event UnityAction ShootEvent;
         public event UnityAction<Vector2> AimEvent;
+        public event UnityAction<int> WeaponChangeEvent; 
         
         private readonly PlayerWithGunInput _input;
         private readonly float _stickDeadZone = 0.2f;
@@ -39,6 +40,18 @@ namespace Game._Scripts.Player.Gunner
                 if (inputVector.magnitude > _stickDeadZone)
                     AimEvent?.Invoke(inputVector);
             }
+        }
+
+        public void OnPreviousWeapon(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+                WeaponChangeEvent?.Invoke(-1);
+        }
+
+        public void OnNextWeapon(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+                WeaponChangeEvent?.Invoke(+1);
         }
     }
 }

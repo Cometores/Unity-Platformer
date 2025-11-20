@@ -638,6 +638,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 106691384}
+  - component: {fileID: 106691389}
   - component: {fileID: 106691388}
   - component: {fileID: 106691387}
   - component: {fileID: 106691386}
@@ -776,6 +777,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 106691383}
   m_CullTransparentMesh: 1
+--- !u!114 &106691389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106691383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 326e2966700511e4ba5b406d46d29d7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game._Scripts.UI.Buttons.SelectableGuard
 --- !u!4 &111284062 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 770771455324708619, guid: 26660534bc4af324cb9f88404127dcf1, type: 3}
@@ -1983,6 +1996,7 @@ GameObject:
   - component: {fileID: 400923533}
   - component: {fileID: 400923532}
   - component: {fileID: 400923535}
+  - component: {fileID: 400923536}
   m_Layer: 5
   m_Name: ButtonMushroom
   m_TagString: Untagged
@@ -2104,6 +2118,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game._Scripts.Debugging.TeleportToCheckpointButton
   checkpoint: {fileID: 1214517043}
+--- !u!114 &400923536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 400923530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 326e2966700511e4ba5b406d46d29d7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game._Scripts.UI.Buttons.SelectableGuard
 --- !u!1 &412869021
 GameObject:
   m_ObjectHideFlags: 0
@@ -2113,6 +2139,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 412869022}
+  - component: {fileID: 412869027}
   - component: {fileID: 412869026}
   - component: {fileID: 412869025}
   - component: {fileID: 412869024}
@@ -2251,6 +2278,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 412869021}
   m_CullTransparentMesh: 1
+--- !u!114 &412869027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412869021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 326e2966700511e4ba5b406d46d29d7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game._Scripts.UI.Buttons.SelectableGuard
 --- !u!1 &413593614
 GameObject:
   m_ObjectHideFlags: 0
@@ -3239,6 +3278,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 732479633}
+  - component: {fileID: 732479638}
   - component: {fileID: 732479637}
   - component: {fileID: 732479636}
   - component: {fileID: 732479635}
@@ -3377,6 +3417,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 732479632}
   m_CullTransparentMesh: 1
+--- !u!114 &732479638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732479632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 326e2966700511e4ba5b406d46d29d7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game._Scripts.UI.Buttons.SelectableGuard
 --- !u!1 &736984143 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4894305546839602276, guid: 9c82f046950304d4096537b288747711, type: 3}
@@ -3744,6 +3796,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 955331691}
+  - component: {fileID: 955331696}
   - component: {fileID: 955331695}
   - component: {fileID: 955331694}
   - component: {fileID: 955331693}
@@ -3869,6 +3922,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 955331690}
   m_CullTransparentMesh: 1
+--- !u!114 &955331696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 955331690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 326e2966700511e4ba5b406d46d29d7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game._Scripts.UI.Buttons.SelectableGuard
 --- !u!1 &979001438
 GameObject:
   m_ObjectHideFlags: 0
@@ -4332,6 +4397,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1138578000}
+  - component: {fileID: 1138578005}
   - component: {fileID: 1138578004}
   - component: {fileID: 1138578003}
   - component: {fileID: 1138578002}
@@ -4470,6 +4536,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1138577999}
   m_CullTransparentMesh: 1
+--- !u!114 &1138578005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1138577999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 326e2966700511e4ba5b406d46d29d7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game._Scripts.UI.Buttons.SelectableGuard
 --- !u!1 &1161526453
 GameObject:
   m_ObjectHideFlags: 0
@@ -4479,6 +4557,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1161526454}
+  - component: {fileID: 1161526459}
   - component: {fileID: 1161526458}
   - component: {fileID: 1161526457}
   - component: {fileID: 1161526456}
@@ -4617,6 +4696,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1161526453}
   m_CullTransparentMesh: 1
+--- !u!114 &1161526459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161526453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 326e2966700511e4ba5b406d46d29d7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game._Scripts.UI.Buttons.SelectableGuard
 --- !u!1 &1214517043 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8686176739465144759, guid: 6dc05f1e5932080468917825ef5aa9e1, type: 3}
@@ -5463,6 +5554,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1390403619}
+  - component: {fileID: 1390403624}
   - component: {fileID: 1390403623}
   - component: {fileID: 1390403622}
   - component: {fileID: 1390403621}
@@ -5601,6 +5693,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1390403618}
   m_CullTransparentMesh: 1
+--- !u!114 &1390403624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1390403618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 326e2966700511e4ba5b406d46d29d7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game._Scripts.UI.Buttons.SelectableGuard
 --- !u!1 &1461535159
 GameObject:
   m_ObjectHideFlags: 0
@@ -5610,6 +5714,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1461535160}
+  - component: {fileID: 1461535165}
   - component: {fileID: 1461535164}
   - component: {fileID: 1461535163}
   - component: {fileID: 1461535162}
@@ -5748,6 +5853,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1461535159}
   m_CullTransparentMesh: 1
+--- !u!114 &1461535165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461535159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 326e2966700511e4ba5b406d46d29d7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game._Scripts.UI.Buttons.SelectableGuard
 --- !u!4 &1476841955 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6624086836506085553, guid: a30a5de191272b54abe6dd752251ffd9, type: 3}
@@ -6644,6 +6761,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1956965477}
+  - component: {fileID: 1956965482}
   - component: {fileID: 1956965480}
   - component: {fileID: 1956965479}
   - component: {fileID: 1956965478}
@@ -6782,6 +6900,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   checkpoint: {fileID: 2084494047}
+--- !u!114 &1956965482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1956965476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 326e2966700511e4ba5b406d46d29d7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game._Scripts.UI.Buttons.SelectableGuard
 --- !u!4 &1969232237 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7713490517408153828, guid: 2e775dc5130cfd143929494a8d82f56e, type: 3}
@@ -6981,6 +7111,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2014832438}
+  - component: {fileID: 2014832444}
   - component: {fileID: 2014832442}
   - component: {fileID: 2014832441}
   - component: {fileID: 2014832440}
@@ -7106,6 +7237,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game._Scripts.Debugging.ChangePlayerControllerButton
   playerPrefab: {fileID: 228416389088342729, guid: 5abd403e6aa04d940abb8c2dbdf3d6fc, type: 3}
+--- !u!114 &2014832444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2014832437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 326e2966700511e4ba5b406d46d29d7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game._Scripts.UI.Buttons.SelectableGuard
 --- !u!1001 &2027183912
 PrefabInstance:
   m_ObjectHideFlags: 0
