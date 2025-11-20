@@ -169,6 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 316bc37c4ecbe624d98f529bd9901280, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game._Scripts.Player.Gunner.Weapons.RocketBullet
+  _aoeDamage: {fileID: 5557385478039519174, guid: fe723c055a1e02b4a8b175126ab14481, type: 3}
 --- !u!1 &2361938161633832288
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Game._Scripts.Player.Gunner.Weapons
 {
@@ -28,6 +29,11 @@ namespace Game._Scripts.Player.Gunner.Weapons
                 DetachTrail(other.GetContact(0).point);
                 Destroy(gameObject);
             }
+        }
+
+        private void OnDestroy()
+        {
+            throw new NotImplementedException();
         }
     }
 }
