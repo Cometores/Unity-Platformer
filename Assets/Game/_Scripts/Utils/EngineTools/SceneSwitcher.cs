@@ -7,7 +7,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Game._Scripts.Utils
+namespace Settings
 {
     [InitializeOnLoad]
     public static class SceneSwitcherToolbar
@@ -59,7 +59,11 @@ namespace Game._Scripts.Utils
             // Remove old UI if it exists to prevent duplication
             if (toolbarUI != null)
             {
-                leftContainer.Remove(toolbarUI);
+                // Only remove if we're actually attached to this container; otherwise detach safely.
+                if (toolbarUI.parent == leftContainer)
+                    leftContainer.Remove(toolbarUI);
+                else
+                    toolbarUI.RemoveFromHierarchy();
             }
 
             toolbarUI = new IMGUIContainer(OnGUI);
